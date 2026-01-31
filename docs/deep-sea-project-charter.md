@@ -6,7 +6,7 @@
 
 **Project Manager:** Claude (AI Assistant)
 
-**Developer:** dave-pub
+**Developer:** human
 
 **Project Type:** Personal hobby project, open-source upon completion
 
