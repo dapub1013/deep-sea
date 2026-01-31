@@ -1,0 +1,8 @@
+- phish.in API analysis
+- project charter
+- project roadmap
+- technical decisions
+- project guidelines
+- screens
+- tech stack
+- ui style guide
