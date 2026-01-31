@@ -1,12 +1,12 @@
-# Phish.in Stream Player - Project Charter
+# Deep-Sea: A Phish.in Stream Player - Project Charter
 
 ## Project Overview
 
-**Project Name:** Phish.in Stream Player
+**Project Name:** Deep-Sea
 
 **Project Manager:** Claude (AI Assistant)
 
-**Developer:** [Your Name]
+**Developer:** dave-pub
 
 **Project Type:** Personal hobby project, open-source upon completion
 
