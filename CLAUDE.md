@@ -24,11 +24,11 @@ Deep-Sea is a desktop music player for streaming Phish concerts from phish.in. T
 
 ## Project Phases & Current Status
 
-**Current Phase:** Phase 1 (Project Charter) - Complete
+**Current Phase:** Phase 2 (Requirements Definition) - Complete
 
 **Phases Overview:**
 1. ✓ Project Charter
-2. Requirements Definition
+2. ✓ Requirements Definition
 3. API Feasibility & Testing
 4. UI/UX Design & Style Guide (MUST complete before coding begins)
 5. Technical Architecture Decision
@@ -62,6 +62,7 @@ The application will integrate with phish.in's API (read-only access).
 ## Documentation Structure
 
 - `docs/deep-sea-project-charter.md` - Complete project charter defining vision, scope, phases, and governance
+- `docs/02-requirements.md` - Requirements definition with must-have, should-have, and nice-to-have features
 - `docs/discuss-charter.md` - Initial charter discussion notes
 - `notes.txt` - Ongoing project notes and task list
 
