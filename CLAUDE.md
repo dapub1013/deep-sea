@@ -20,16 +20,18 @@ Deep-Sea is a desktop music player for streaming Phish concerts from phish.in. T
 - Development: macOS laptop
 - Production: Raspberry Pi 4 with IQAudio DAC
 
-**Tech Stack:** TBD (Phase 5) - likely FastAPI + Tailwind + Webview, or PyQt5
+**Tech Stack:**
+- Audio Engine: **miniaudio** (decided in Phase 3 for gapless HTTP streaming)
+- UI Framework: TBD (Phase 5) - likely FastAPI + Tailwind + Webview, or PyQt5
 
 ## Project Phases & Current Status
 
-**Current Phase:** Phase 2 (Requirements Definition) - Complete
+**Current Phase:** Phase 3 (API Feasibility & Testing) - Complete
 
 **Phases Overview:**
 1. ✓ Project Charter
 2. ✓ Requirements Definition
-3. API Feasibility & Testing
+3. ✓ API Feasibility & Testing
 4. UI/UX Design & Style Guide (MUST complete before coding begins)
 5. Technical Architecture Decision
 6. Development (Iterative)
@@ -59,10 +61,30 @@ The application will integrate with phish.in's API (read-only access).
 - get_song, get_venue, get_tour, get_playlist
 - stats (gaps/bustouts, transitions, predictions, geographic patterns, etc.)
 
+## Phase 3 Key Findings
+
+**Audio Format & Streaming:**
+- phish.in serves MP3 only via direct URLs (Cloudflare CDN)
+- Gapless playback validated using miniaudio (replaces VLC which introduced gaps)
+- Real-time audio access available via PCM frame callbacks (enables future visualizer)
+
+**API Data Availability:**
+- Tours are first-class entities (promoted to Must-Have feature)
+- Jamcharts tag covers 5,008 tracks (community-curated highlights)
+- Per-track `jam_starts_at_second` field enables "jump to highlight" feature
+- Pre-rendered waveform images available for every track
+- No authentication required for any endpoints
+
+**Notable Features to Consider in Phase 4:**
+- `jam_starts_at_second` timestamps for highlight moments
+- Waveform images (free visual content)
+- Community playlists (potential import feature)
+
 ## Documentation Structure
 
 - `docs/deep-sea-project-charter.md` - Complete project charter defining vision, scope, phases, and governance
 - `docs/02-requirements.md` - Requirements definition with must-have, should-have, and nice-to-have features
+- `docs/03-phase3-findings.md` - Phase 3 API feasibility findings and early architecture decisions
 - `docs/discuss-charter.md` - Initial charter discussion notes
 - `notes.txt` - Ongoing project notes and task list
 
