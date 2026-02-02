@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-Deep-Sea is a desktop music player for streaming Phish concerts from phish.in. This is a learning/hobby project in early stages (Phase 1: Project Charter complete). The project serves dual purposes:
+Deep-Sea is a desktop music player for streaming Phish concerts from phish.in. This is a learning/hobby project with complete planning phase (Phases 1-5: Charter, Requirements, API Testing, UI/UX Design, and Technical Architecture). The project serves dual purposes:
 1. Create a polished, daily-use application for streaming Phish concerts
 2. Establish reusable framework and patterns to refactor an existing Grateful Dead concert streaming application
 
@@ -21,24 +21,27 @@ Deep-Sea is a desktop music player for streaming Phish concerts from phish.in. T
 - Production: Raspberry Pi 4 with IQAudio DAC
 
 **Tech Stack:**
-- Audio Engine: **miniaudio** (decided in Phase 3 for gapless HTTP streaming)
-- UI Framework: TBD (Phase 5) - likely FastAPI + Tailwind + Webview, or PyQt5
+- Audio Engine: **miniaudio** (pyminiaudio Python wrapper)
+- UI Framework: **PyQt5 6.x** (decided in Phase 5)
+- Styling: **QSS** (Qt Style Sheets) - CSS-like declarative styling
+- HTTP Client: **requests** - phish.in API integration
+- Data Storage: **SQLite** - local favorites, collections, history
 
 ## Project Phases & Current Status
 
-**Current Phase:** Phase 4 (UI/UX Design & Style Guide) - Complete
+**Current Phase:** Phase 5 (Technical Architecture Decision) - Complete
 
 **Phases Overview:**
 1. ✓ Project Charter
 2. ✓ Requirements Definition
 3. ✓ API Feasibility & Testing
 4. ✓ UI/UX Design & Style Guide
-5. Technical Architecture Decision
+5. ✓ Technical Architecture Decision
 6. Development (Iterative)
 7. Audio/Hardware Integration & Testing
 8. Packaging & Deployment
 
-**Critical Gate:** Phase 4 (UI/UX Design & Style Guide) is now complete. Application coding begins in Phase 6 after Phase 5 (Technical Architecture Decision) is approved.
+**Critical Gate:** Phase 5 (Technical Architecture Decision) is now complete. Ready to begin Phase 6 (Development) upon developer approval.
 
 ## Core Development Principles
 
@@ -102,13 +105,33 @@ The application will integrate with phish.in's API (read-only access).
 
 **Figma Source:** https://www.figma.com/make/SzayRR0qTKkMH1FFxC4HGr/Phish-Concert-Streaming-App
 
-**Important Note:** The Phase 4 prototype uses React + TypeScript as the design implementation framework. This serves as a reference implementation demonstrating design patterns, component behavior, and interactions. However, the final UI framework architecture (React + webview vs. PyQt5) will be decided in Phase 5. If PyQt5 is chosen, the design tokens and component specifications should be replicated exactly to maintain design fidelity.
+**Important Note:** The Phase 4 prototype uses React + TypeScript as the design implementation framework. This serves as a reference implementation demonstrating design patterns, component behavior, and interactions. The design tokens and component specifications will be replicated in PyQt5/QSS to maintain design fidelity.
 
-**Open Questions for Phase 5:**
-- UI framework integration (React + FastAPI + webview vs. PyQt5)
-- Python ↔ JavaScript bridge architecture (WebSocket, REST, IPC)
-- Asset handling and caching strategy
-- Build and packaging for Raspberry Pi deployment
+## Phase 5 Key Deliverables
+
+**Architecture Decisions:**
+- **UI Framework:** PyQt5 6.x with QSS styling (native desktop feel, proven for music apps)
+- **Design Translation:** Phase 4 CSS specifications → PyQt5/QSS implementation
+- **State Management:** Qt Signals/Slots (built-in event system, no external dependencies)
+- **Audio Integration:** Custom HTTPStreamSource adapter + gapless playback via Python generator
+
+**Core Architecture Layers:**
+- **UI Layer:** PyQt5 screens and components implementing Phase 4 design system
+- **Audio Engine:** miniaudio with custom HTTP streaming and gapless queue management
+- **State Manager:** Python data models with Qt signals for UI updates
+- **Data Layer:** API client (requests), cache manager (disk), database (SQLite)
+
+**Build & Deployment:**
+- **macOS:** PyInstaller single-file app bundle
+- **Raspberry Pi:** Direct Python execution with systemd service + kiosk mode
+- **Development:** Python 3.11+ with virtual environment
+
+**Implementation Patterns Defined:**
+- Design token mapping (CSS custom properties → QSS/QPalette)
+- Component translation (React components → PyQt5 custom widgets)
+- Gapless HTTP streaming architecture
+- Error handling and logging framework
+- Resume on reconnect (state persistence)
 
 ## Documentation Structure
 
@@ -118,6 +141,7 @@ The application will integrate with phish.in's API (read-only access).
 - `docs/04-phase4-design-summary.md` - Complete design system documentation with extracted specifications
 - `docs/04-phase4-complete.md` - Phase 4 completion document with design decisions and approval
 - `docs/04-ui-ux-design/` - Functional React + TypeScript prototype (Figma export - DO NOT MODIFY)
+- `docs/05-technical-architecture.md` - Complete technical architecture decision (Phase 5 deliverable)
 - `docs/discuss-charter.md` - Initial charter discussion notes
 - `notes.txt` - Ongoing project notes and task list
 
