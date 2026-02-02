@@ -100,6 +100,10 @@ The application will integrate with phish.in's API (read-only access).
 - Zustand state management + Motion animation library
 - All Must-Have and Should-Have features addressed in design
 
+**Figma Source:** https://www.figma.com/make/SzayRR0qTKkMH1FFxC4HGr/Phish-Concert-Streaming-App
+
+**Important Note:** The Phase 4 prototype uses React + TypeScript as the design implementation framework. This serves as a reference implementation demonstrating design patterns, component behavior, and interactions. However, the final UI framework architecture (React + webview vs. PyQt5) will be decided in Phase 5. If PyQt5 is chosen, the design tokens and component specifications should be replicated exactly to maintain design fidelity.
+
 **Open Questions for Phase 5:**
 - UI framework integration (React + FastAPI + webview vs. PyQt5)
 - Python ↔ JavaScript bridge architecture (WebSocket, REST, IPC)
