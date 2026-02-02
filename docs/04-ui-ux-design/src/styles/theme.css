@@ -1,0 +1,217 @@
+@custom-variant dark (&:is(.dark *));
+
+:root {
+  /* Typography */
+  --font-size: 16px;
+  
+  /* Purple-based color palette for Phish app */
+  --purple-50: #f5f3ff;
+  --purple-100: #ede9fe;
+  --purple-200: #ddd6fe;
+  --purple-300: #c4b5fd;
+  --purple-400: #a78bfa;
+  --purple-500: #8b5cf6;
+  --purple-600: #7c3aed;
+  --purple-700: #6d28d9;
+  --purple-800: #5b21b6;
+  --purple-900: #4c1d95;
+  --purple-950: #2e1065;
+  
+  /* Deep purple gradient background colors */
+  --deep-purple-start: #1a0b2e;
+  --deep-purple-mid: #2d1b4e;
+  --deep-purple-end: #4c1d95;
+  
+  /* Semantic colors - dark theme with deep purple gradients */
+  --background: linear-gradient(180deg, var(--deep-purple-start) 0%, var(--deep-purple-mid) 50%, var(--deep-purple-end) 100%);
+  --foreground: #f0f0f0;
+  --card: rgba(139, 92, 246, 0.15);
+  --card-foreground: #f0f0f0;
+  --popover: rgba(46, 16, 101, 0.95);
+  --popover-foreground: #f0f0f0;
+  
+  /* Primary - Phish purple (brighter for dark background) */
+  --primary: #a78bfa;
+  --primary-foreground: #1a0b2e;
+  --primary-hover: #c4b5fd;
+  
+  /* Secondary */
+  --secondary: rgba(167, 139, 250, 0.2);
+  --secondary-foreground: #ddd6fe;
+  
+  /* Muted */
+  --muted: rgba(139, 92, 246, 0.1);
+  --muted-foreground: #c4b5fd;
+  
+  /* Accent */
+  --accent: rgba(167, 139, 250, 0.25);
+  --accent-foreground: #ddd6fe;
+  
+  /* State colors */
+  --success: #10b981;
+  --success-foreground: #ffffff;
+  --warning: #f59e0b;
+  --warning-foreground: #ffffff;
+  --destructive: #ef4444;
+  --destructive-foreground: #ffffff;
+  
+  /* Borders & inputs */
+  --border: rgba(167, 139, 250, 0.3);
+  --input: rgba(167, 139, 250, 0.3);
+  --input-background: rgba(46, 16, 101, 0.5);
+  --switch-background: rgba(139, 92, 246, 0.3);
+  --ring: #a78bfa;
+  
+  /* Typography weights */
+  --font-weight-medium: 500;
+  --font-weight-normal: 400;
+  
+  /* Border radius - iOS-inspired */
+  --radius: 0.75rem;
+  
+  /* Spacing system - 8pt grid */
+  --spacing-1: 4px;
+  --spacing-2: 8px;
+  --spacing-3: 12px;
+  --spacing-4: 16px;
+  --spacing-5: 24px;
+  --spacing-6: 32px;
+  --spacing-7: 48px;
+  --spacing-8: 64px;
+  
+  /* Touch targets */
+  --touch-target: 44px;
+  
+  /* Shadows - subtle depth */
+  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+  --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+  
+  /* Equalizer gradient colors */
+  --equalizer-dark: #5b21b6;
+  --equalizer-mid: #7c3aed;
+  --equalizer-light: #a78bfa;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-input-background: var(--input-background);
+  --color-switch-background: var(--switch-background);
+  --color-ring: var(--ring);
+  --color-success: var(--success);
+  --color-warning: var(--warning);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /**
+  * iOS-inspired typography scale
+  */
+
+  html {
+    font-size: var(--font-size);
+  }
+
+  h1 {
+    font-size: 2rem;
+    font-weight: var(--font-weight-medium);
+    line-height: 1.2;
+    letter-spacing: -0.02em;
+  }
+
+  h2 {
+    font-size: 1.5rem;
+    font-weight: var(--font-weight-medium);
+    line-height: 1.3;
+    letter-spacing: -0.01em;
+  }
+
+  h3 {
+    font-size: 1.25rem;
+    font-weight: var(--font-weight-medium);
+    line-height: 1.4;
+  }
+
+  h4 {
+    font-size: 1rem;
+    font-weight: var(--font-weight-medium);
+    line-height: 1.5;
+  }
+
+  label {
+    font-size: 1rem;
+    font-weight: var(--font-weight-medium);
+    line-height: 1.5;
+  }
+
+  button {
+    font-size: 1rem;
+    font-weight: var(--font-weight-medium);
+    line-height: 1.5;
+  }
+
+  input {
+    font-size: 1rem;
+    font-weight: var(--font-weight-normal);
+    line-height: 1.5;
+  }
+  
+  .text-display {
+    font-size: 2.5rem;
+    font-weight: var(--font-weight-medium);
+    line-height: 1.1;
+    letter-spacing: -0.03em;
+  }
+  
+  .text-title {
+    font-size: 1.75rem;
+    font-weight: var(--font-weight-medium);
+    line-height: 1.2;
+    letter-spacing: -0.02em;
+  }
+  
+  .text-body {
+    font-size: 1rem;
+    font-weight: var(--font-weight-normal);
+    line-height: 1.5;
+  }
+  
+  .text-caption {
+    font-size: 0.875rem;
+    font-weight: var(--font-weight-normal);
+    line-height: 1.4;
+    opacity: 0.7;
+  }
+}
