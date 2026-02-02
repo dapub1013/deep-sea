@@ -26,7 +26,7 @@ docs/04-ui-ux-design/
 
 ## 3. Live Prototype
 
-**Figma Source:** [Placeholder - URL to be added]
+**Figma Source:** [https://www.figma.com/make/SzayRR0qTKkMH1FFxC4HGr/Phish-Concert-Streaming-App]
 
 **Local Prototype:**
 - Run `npm install` in `docs/04-ui-ux-design/`

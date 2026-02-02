@@ -37,7 +37,7 @@ A fully functional React + TypeScript prototype demonstrating:
 - **State management patterns** (Zustand store for player state)
 - **Animation system** (Motion library for visual feedback)
 
-**Figma Source:** [Placeholder - URL to be provided by developer]
+**Figma Source:** [https://www.figma.com/make/SzayRR0qTKkMH1FFxC4HGr/Phish-Concert-Streaming-App]
 
 ### 2.3 Runnable Prototype
 
@@ -232,7 +232,7 @@ Given the project's solo developer context and target platform (personal RPi tou
 
 This document is approved when the developer confirms the design system is complete, accurate, and ready to inform Phase 5 (Technical Architecture Decision).
 
-**Developer Approval:** _____________________________________ &nbsp; **Date:** _______________
+**Developer Approval:** //signed human &nbsp; **Date:** February 2, 2026
 
 **PM Acknowledgment:** Claude (AI) &nbsp; | &nbsp; **Date:** February 2, 2026
 
