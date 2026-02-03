@@ -36,6 +36,7 @@ env/
 venv/
 .venv/
 ENV/
+test*.py
 
 # Node.js (if applicable)
 node_modules/
