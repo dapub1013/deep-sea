@@ -22,20 +22,20 @@ Implemented the **Player Screen** as specified in the Phase 5 Technical Architec
 ├───────────────────────────┬─────────────────────────────┤
 │  Left Column (50%)        │  Right Column (50%)         │
 │                           │                             │
-│  ┌─────────────────────┐  │  ┌───────────────────────┐ │
-│  │  Show Metadata      │  │  │                       │ │
-│  │  • Album Art        │  │  │   Now Playing Card    │ │
-│  │  • Venue            │  │  │   • Equalizer         │ │
-│  │  • Date/Location    │  │  │   • Track Info        │ │
-│  │  • Source           │  │  │   • Progress Bar      │ │
-│  └─────────────────────┘  │  │   • Controls          │ │
-│                           │  │                       │ │
-│  ┌─────────────────────┐  │  │                       │ │
-│  │                     │  │  │                       │ │
-│  │   Track List        │  │  │                       │ │
-│  │   (Scrollable)      │  │  │                       │ │
-│  │                     │  │  │                       │ │
-│  │                     │  │  └───────────────────────┘ │
+│  ┌─────────────────────┐  │  ┌───────────────────────┐  │
+│  │  Show Metadata      │  │  │                       │  │
+│  │  • Album Art        │  │  │   Now Playing Card    │  │
+│  │  • Venue            │  │  │   • Equalizer         │  │
+│  │  • Date/Location    │  │  │   • Track Info        │  │
+│  │  • Source           │  │  │   • Progress Bar      │  │
+│  └─────────────────────┘  │  │   • Controls          │  │
+│                           │  │                       │  │
+│  ┌─────────────────────┐  │  │                       │  │
+│  │                     │  │  │                       │  │
+│  │   Track List        │  │  │                       │  │
+│  │   (Scrollable)      │  │  │                       │  │
+│  │                     │  │  │                       │  │
+│  │                     │  │  └───────────────────────┘  │
 │  └─────────────────────┘  │                             │
 └───────────────────────────┴─────────────────────────────┘
 ```
