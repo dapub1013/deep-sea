@@ -1,0 +1,21 @@
+# Deep-Sea Desktop Music Player - Python Dependencies
+# Phase 6 Development Environment
+
+# UI Framework
+PyQt5>=5.15.0
+
+# Audio Engine
+miniaudio>=1.45  # Python wrapper for miniaudio C library
+
+# HTTP Client
+requests>=2.31.0
+
+# Image Processing
+Pillow>=10.0.0
+
+# Build Tool (macOS)
+PyInstaller>=6.0.0
+
+# Development Dependencies (optional)
+# pytest>=7.4.0  # Uncomment for testing
+# black>=23.0.0  # Uncomment for code formatting
