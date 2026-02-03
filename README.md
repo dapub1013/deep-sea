@@ -4,9 +4,7 @@ A modern desktop music player for streaming Phish concerts from phish.in.
 
 ## Project Status
 
-**Current Phase:** Phase 5 (Technical Architecture) - Complete ✓
-
-All planning phases are complete. Ready to begin development (Phase 6) upon approval.
+**Current Phase:** Phase 6 (Development) - In Progress ⧗
 
 **Completed Phases:**
 1. ✓ Project Charter
@@ -14,6 +12,13 @@ All planning phases are complete. Ready to begin development (Phase 6) upon appr
 3. ✓ API Feasibility & Testing
 4. ✓ UI/UX Design & Style Guide
 5. ✓ Technical Architecture Decision
+6. ⧗ **Development (Iterative)** - IN PROGRESS
+   - ✓ Audio engine integration complete (HTTPStreamSource, GaplessPlayer, AudioEngine)
+   - ✓ PhishInAPI client implemented
+   - Next: API authentication, Player Screen UI
+
+**Recent Milestone (Feb 2026):**
+Audio integration complete with miniaudio HTTP streaming, gapless playback, and Qt signal integration. See `docs/06-audio-integration-complete.md` for details.
 
 ## Description
 
@@ -60,12 +65,20 @@ Deep-Sea is a desktop music player for streaming Phish concerts from phish.in. T
 
 ## Documentation
 
-- `docs/deep-sea-project-charter.md` - Complete project charter
+**Planning Phase:**
+- `docs/01-project-charter.md` - Complete project charter
 - `docs/02-requirements.md` - Requirements definition
 - `docs/03-phase3-findings.md` - API feasibility findings
 - `docs/04-phase4-design-summary.md` - Design system documentation
 - `docs/04-phase4-complete.md` - Phase 4 completion document
 - `docs/05-technical-architecture.md` - Technical architecture decision (Phase 5)
+
+**Development Phase:**
+- `docs/06-audio-integration-complete.md` - Audio engine implementation summary
+- `docs/API-AUTHENTICATION-REQUIRED.md` - API authentication requirements
+- `docs/AUDIO-ENGINE-USAGE.md` - Quick reference guide for audio engine
+
+**Project Context:**
 - `CLAUDE.md` - Project guidance for Claude Code
 
 ## UI Prototype
@@ -81,3 +94,25 @@ npm run dev
 ```
 
 **Note:** The prototype uses React for design implementation. The final application will use PyQt5 with design tokens and component specifications translated to QSS.
+
+## Development Setup
+
+**Prerequisites:**
+- Python 3.11+
+- Virtual environment recommended
+
+**Quick Start:**
+
+```bash
+# Create and activate virtual environment
+python3 -m venv venv
+source venv/bin/activate  # On macOS/Linux
+
+# Install dependencies
+pip install -r requirements.txt
+
+# Run audio integration demo
+python test_audio_demo.py
+```
+
+**Note:** phish.in API now requires authentication. See `docs/API-AUTHENTICATION-REQUIRED.md` for details on obtaining an API key.
