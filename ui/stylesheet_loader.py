@@ -8,8 +8,14 @@ This module provides utilities to:
 3. Set up programmatic styling (gradients, etc.) that QSS cannot handle
 """
 
+import sys
 from pathlib import Path
 from typing import Optional
+
+# Add project root to path for direct execution
+if __name__ == "__main__":
+    project_root = Path(__file__).parent.parent
+    sys.path.insert(0, str(project_root))
 
 from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QLinearGradient, QColor, QBrush, QPalette
@@ -125,8 +131,6 @@ if __name__ == "__main__":
     Example usage of stylesheet loader.
     Run this to verify stylesheets load without errors.
     """
-    import sys
-
     # Create application
     app = QApplication(sys.argv)
 
