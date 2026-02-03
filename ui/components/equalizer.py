@@ -1,27 +1,33 @@
 """
 Equalizer Component
-Animated 5-bar equalizer matching Phase 4 design system.
+Animated 5-bar equalizer with proven styling from Grateful Dead app.
 
-This is a signature visual element for Deep-Sea. The implementation follows
-the pattern from the technical architecture (Section 4.3.1), with visual
-styling that may be refined based on the Grateful Dead app animation.
+This is a signature visual element for Deep-Sea. The implementation uses
+the proven blue gradient and rendering approach from the Grateful Dead
+streaming application visualizer.
+
+Styling:
+- Blue gradient: Bright cyan (#00BFFF) to dodger blue (#1E90FF)
+- 8px rounded corners via QPainterPath
+- Smooth antialiased rendering
 """
 
 import random
 from PyQt5.QtCore import Qt, QTimer
-from PyQt5.QtGui import QPainter, QLinearGradient, QColor, QBrush
+from PyQt5.QtGui import QPainter, QLinearGradient, QColor, QBrush, QPainterPath
 from PyQt5.QtWidgets import QWidget
 
 
 class EqualizerWidget(QWidget):
     """
-    Animated 5-bar equalizer matching Phase 4 design.
+    Animated 5-bar equalizer with proven styling from Grateful Dead app.
 
     Features:
     - Two size variants: "compact" (40px) and "large" (120px)
-    - Purple gradient (dark to light)
+    - Blue gradient (bright cyan to dodger blue)
     - Smooth random animation when playing
     - Static minimal bars when stopped
+    - 8px rounded corners for polished appearance
 
     Usage:
         # Compact equalizer in Now Playing Bar
@@ -75,10 +81,12 @@ class EqualizerWidget(QWidget):
 
     def paintEvent(self, event):
         """
-        Draw 5 animated bars with purple gradient.
+        Draw 5 animated bars with blue gradient.
 
-        The gradient goes from dark purple (bottom) to light purple (top),
-        matching the Phase 4 design system.
+        Uses the proven rendering approach from the Grateful Dead app:
+        - Bright cyan (#00BFFF) to dodger blue (#1E90FF) gradient
+        - QPainterPath with 8px rounded corners
+        - Smooth antialiasing
         """
         painter = QPainter(self)
         painter.setRenderHint(QPainter.Antialiasing)
@@ -88,13 +96,12 @@ class EqualizerWidget(QWidget):
         bar_width = width / 7  # 5 bars + 4 gaps (each gap is half a bar width)
         gap = bar_width / 2
 
-        # Define gradient (dark to light purple)
+        # Define gradient (bright cyan to dodger blue)
+        # From Grateful Dead app visualizer
         gradient = QLinearGradient(0, 0, 0, height)
-        gradient.setColorAt(0.0, QColor("#5b21b6"))  # Purple-800 (dark)
-        gradient.setColorAt(0.5, QColor("#7c3aed"))  # Purple-600 (mid)
-        gradient.setColorAt(1.0, QColor("#a78bfa"))  # Purple-400 (light)
+        gradient.setColorAt(0.0, QColor("#00BFFF"))  # Bright cyan/blue
+        gradient.setColorAt(1.0, QColor("#1E90FF"))  # Dodger blue
 
-        painter.setBrush(QBrush(gradient))
         painter.setPen(Qt.NoPen)
 
         # Draw 5 bars
@@ -110,11 +117,10 @@ class EqualizerWidget(QWidget):
 
             y = height - bar_height
 
-            # Rounded rectangle for each bar
-            painter.drawRoundedRect(
-                int(x), int(y), int(bar_width), int(bar_height),
-                4, 4  # Corner radius
-            )
+            # Create rounded rectangle path (8px radius for polished look)
+            path = QPainterPath()
+            path.addRoundedRect(x, y, bar_width, bar_height, 8, 8)
+            painter.fillPath(path, gradient)
 
 
 # Test the equalizer component
@@ -194,9 +200,9 @@ if __name__ == "__main__":
     print("  • Compact: 40x40px (for Now Playing Bar)")
     print("  • Large: 120x120px (for Player Screen)")
     print()
-    print("✓ Features:")
-    print("  • Purple gradient (dark to light)")
-    print("  • 5 animated bars")
+    print("✓ Features (from Grateful Dead app):")
+    print("  • Blue gradient (bright cyan #00BFFF → dodger blue #1E90FF)")
+    print("  • 5 animated bars with 8px rounded corners")
     print("  • 100ms update interval")
     print("  • Random heights (0.2-1.0)")
     print()
