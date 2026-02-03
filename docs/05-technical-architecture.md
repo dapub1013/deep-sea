@@ -754,7 +754,7 @@ from typing import List, Dict, Optional
 class PhishInAPI:
     """Client for phish.in API."""
     
-    BASE_URL = "https://phish.in/api/v1"
+    BASE_URL = "https://phish.in/api/v2"
     
     @staticmethod
     def get_shows(year: Optional[int] = None, audio_status: str = "complete") -> List[Dict]:
@@ -1962,4 +1962,24 @@ This document is approved when the developer confirms the architecture is clear,
 
 ---
 
-*Technical Architecture Decision v1.0 | Deep-Sea Project | Phase 5 Complete*
+## 13. Correction Notice
+
+**Date:** February 3, 2026
+
+**Issue:** Section 6.1 (API Client) originally specified `BASE_URL = "https://phish.in/api/v1"`. This was incorrect. All Phase 3 testing was conducted against API v2, and the architecture should reflect v2 usage.
+
+**Correction:** Line 757 updated from `/api/v1` to `/api/v2`
+
+**Impact:** Implementation in Phase 6 initially used v1 (as documented), which requires authentication. Upon discovering 401 errors, investigation revealed the documentation error. API client was corrected to v2 (no authentication required), and this architecture document has been updated to match.
+
+**API Version Clarification:**
+- **phish.in API v2** (September 2024): No authentication required, complete catalog
+- **phish.in API v1** (2013, legacy): Requires Bearer token, limited to shows with audio
+
+Deep-Sea uses **API v2** exclusively, as originally tested in Phase 3.
+
+See `docs/lessons-learned/001-api-version-documentation-error.md` for full post-mortem.
+
+---
+
+*Technical Architecture Decision v1.1 | Deep-Sea Project | Phase 5 Complete | Corrected Feb 3, 2026*
