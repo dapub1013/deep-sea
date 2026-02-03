@@ -29,7 +29,7 @@ Deep-Sea is a desktop music player for streaming Phish concerts from phish.in. T
 
 ## Project Phases & Current Status
 
-**Current Phase:** Phase 5 (Technical Architecture Decision) - Complete
+**Current Phase:** Phase 6 (Development) - In Progress
 
 **Phases Overview:**
 1. ✓ Project Charter
@@ -37,11 +37,21 @@ Deep-Sea is a desktop music player for streaming Phish concerts from phish.in. T
 3. ✓ API Feasibility & Testing
 4. ✓ UI/UX Design & Style Guide
 5. ✓ Technical Architecture Decision
-6. Development (Iterative)
+6. **Development (Iterative)** - IN PROGRESS
+   - ✓ Audio engine integration (miniaudio + HTTP streaming)
+   - Next: API authentication, Player Screen implementation
 7. Audio/Hardware Integration & Testing
 8. Packaging & Deployment
 
-**Critical Gate:** Phase 5 (Technical Architecture Decision) is now complete. Ready to begin Phase 6 (Development) upon developer approval.
+**Phase 6 Progress:**
+- ✓ HTTPStreamSource adapter for HTTP MP3 streaming
+- ✓ GaplessPlayer with Qt signal integration
+- ✓ AudioEngine high-level API
+- ✓ PhishInAPI client (requires authentication update)
+- ⧗ API key configuration (phish.in now requires authentication)
+- ⧗ Player Screen UI implementation
+- ⧗ Equalizer component
+- ⧗ Remaining screens (Welcome, Browse, Collections, History, Tour Detail)
 
 ## Core Development Principles
 
@@ -76,7 +86,7 @@ The application will integrate with phish.in's API (read-only access).
 - Jamcharts tag covers 5,008 tracks (community-curated highlights)
 - Per-track `jam_starts_at_second` field enables "jump to highlight" feature
 - Pre-rendered waveform images available for every track
-- No authentication required for any endpoints
+- ~~No authentication required for any endpoints~~ **UPDATE (Feb 2026):** API now requires authentication (see docs/API-AUTHENTICATION-REQUIRED.md)
 
 **Notable Features Addressed in Phase 4:**
 - `jam_starts_at_second` timestamps for highlight moments (implemented as "Jump to Highlight" button)
@@ -135,13 +145,16 @@ The application will integrate with phish.in's API (read-only access).
 
 ## Documentation Structure
 
-- `docs/deep-sea-project-charter.md` - Complete project charter defining vision, scope, phases, and governance
+- `docs/01-project-charter.md` - Complete project charter defining vision, scope, phases, and governance
 - `docs/02-requirements.md` - Requirements definition with must-have, should-have, and nice-to-have features
 - `docs/03-phase3-findings.md` - Phase 3 API feasibility findings and early architecture decisions
 - `docs/04-phase4-design-summary.md` - Complete design system documentation with extracted specifications
 - `docs/04-phase4-complete.md` - Phase 4 completion document with design decisions and approval
 - `docs/04-ui-ux-design/` - Functional React + TypeScript prototype (Figma export - DO NOT MODIFY)
 - `docs/05-technical-architecture.md` - Complete technical architecture decision (Phase 5 deliverable)
+- `docs/06-audio-integration-complete.md` - Audio engine implementation summary (Phase 6 subtask complete)
+- `docs/API-AUTHENTICATION-REQUIRED.md` - phish.in API authentication requirements and action items
+- `docs/AUDIO-ENGINE-USAGE.md` - Quick reference guide for using the audio engine in UI code
 - `docs/discuss-charter.md` - Initial charter discussion notes
 
 ## Key Constraints
