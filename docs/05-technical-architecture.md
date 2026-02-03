@@ -1917,15 +1917,15 @@ Throughout Phase 6, document the following reusable patterns:
 
 Before proceeding to Phase 6 (Development), confirm:
 
-- [ ] **Technology Stack Approved:** PyQt5 + miniaudio + requests + SQLite
-- [ ] **Architecture Patterns Understood:** UI layer, audio engine, data layer separation
-- [ ] **Design Translation Approach Clear:** Phase 4 CSS → PyQt5 QSS mapping
-- [ ] **State Management Pattern Agreed:** Qt signals/slots for event propagation
-- [ ] **Audio Engine Integration Defined:** HTTPStreamSource + gapless generator
-- [ ] **Data Layer Architecture Accepted:** API client, cache manager, SQLite database
-- [ ] **Build & Deployment Strategy Clear:** PyInstaller (macOS), systemd (RPi)
-- [ ] **Security & Privacy Reviewed:** Local-only data, no tracking, minimal attack surface
-- [ ] **Open Questions Acknowledged:** Deferred items documented for Phase 6
+- [x] **Technology Stack Approved:** PyQt5 + miniaudio + requests + SQLite
+- [x] **Architecture Patterns Understood:** UI layer, audio engine, data layer separation
+- [x] **Design Translation Approach Clear:** Phase 4 CSS → PyQt5 QSS mapping
+- [x] **State Management Pattern Agreed:** Qt signals/slots for event propagation
+- [x] **Audio Engine Integration Defined:** HTTPStreamSource + gapless generator
+- [x] **Data Layer Architecture Accepted:** API client, cache manager, SQLite database
+- [x] **Build & Deployment Strategy Clear:** PyInstaller (macOS), systemd (RPi)
+- [x] **Security & Privacy Reviewed:** Local-only data, no tracking, minimal attack surface
+- [x] **Open Questions Acknowledged:** Deferred items documented for Phase 6
 
 ---
 
