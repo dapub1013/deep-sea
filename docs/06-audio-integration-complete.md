@@ -144,22 +144,27 @@ This implementation follows the Technical Architecture document (Section 5) spec
 
 ## Known Issues & Limitations
 
-### 1. phish.in API Authentication Required
+### 1. ~~API Authentication Issue~~ RESOLVED
 
-**Issue**: The phish.in API now requires an API key (as of 2026).
+**Issue**: Initial implementation used phish.in API v1, which requires authentication.
 
-**Impact**: Cannot fetch show data without authentication.
+**Root Cause**: Documentation error in Phase 3 that propagated to Phase 5 architecture specs. Phase 3 testing was actually conducted against v2 (no auth required) but was incorrectly documented as v1.
 
-**Evidence**:
+**Resolution**: Updated `PhishInAPI` class to use API v2 (`https://phish.in/api/v2`), which does not require authentication.
+
+**Status**: ✓ Resolved (see `lessons-learned/001-api-version-documentation-error.md` for full post-mortem)
+
+**Evidence of Issue**:
 ```bash
 $ curl "https://phish.in/api/v1/shows/1997-12-31"
 {"success":false,"error":"No API key provided"}
 ```
 
-**Next Steps**:
-- Contact phish.in to obtain API key
-- Update `PhishInAPI` class to include API key in headers
-- Document API key configuration for users
+**Evidence of Resolution**:
+```bash
+$ curl "https://phish.in/api/v2/shows/1997-12-31"
+{"success":true,"data":{...}}  # Returns complete show data
+```
 
 ### 2. Generator Callback Pattern
 
@@ -203,14 +208,12 @@ deep-sea/
 Based on Section 11 of the Technical Architecture:
 
 1. ✓ ~~Integrate miniaudio (HTTPStreamSource + basic playback)~~ **COMPLETE**
-2. **Configure phish.in API authentication**
-   - Obtain API key
-   - Update API client with authentication
-   - Test with real Phish concert data
+2. ✓ ~~Configure phish.in API~~ **COMPLETE** (resolved v1→v2 version error)
 3. **Build Player Screen**
    - Implement two-column layout
    - Integrate AudioEngine with UI
    - Wire up play/pause/stop controls
+   - Test with real Phish concert data from API v2
 4. **Implement Equalizer Component**
    - Animated 5-bar visualizer
    - Integrate with playback state
