@@ -143,7 +143,6 @@ The application will integrate with phish.in's API (read-only access).
 - `docs/04-ui-ux-design/` - Functional React + TypeScript prototype (Figma export - DO NOT MODIFY)
 - `docs/05-technical-architecture.md` - Complete technical architecture decision (Phase 5 deliverable)
 - `docs/discuss-charter.md` - Initial charter discussion notes
-- `notes.txt` - Ongoing project notes and task list
 
 ## Key Constraints
 
