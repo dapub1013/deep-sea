@@ -19,7 +19,7 @@ class PhishInAPI:
     the phish.in API.
     """
 
-    BASE_URL = "https://phish.in/api/v1"
+    BASE_URL = "https://phish.in/api/v2"
 
     @staticmethod
     def get_shows(year: Optional[int] = None, audio_status: str = "complete") -> List[Dict]:
