@@ -62,3 +62,4 @@ htmlcov/
 .mypy_cache/
 discuss*.md
 skills/
+samples/
