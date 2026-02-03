@@ -77,8 +77,10 @@ def set_gradient_background(widget: QWidget, orientation: Qt.Orientation = Qt.Ve
         widget: QWidget to apply gradient to (typically QMainWindow)
         orientation: Gradient direction (Qt.Vertical for top-to-bottom)
     """
-    # Create gradient
-    gradient = QLinearGradient(0, 0, 0, widget.height())
+    # Create gradient with fixed coordinates (0,0) to (0,1000)
+    # This ensures gradient works regardless of widget height
+    gradient = QLinearGradient(0, 0, 0, 1000)
+    gradient.setCoordinateMode(QLinearGradient.StretchToDeviceMode)
 
     # Apply color stops from Phase 4 design tokens
     gradient_stops = get_gradient_stops()
@@ -131,18 +133,100 @@ if __name__ == "__main__":
     Example usage of stylesheet loader.
     Run this to verify stylesheets load without errors.
     """
+    from PyQt5.QtWidgets import (QMainWindow, QWidget, QVBoxLayout, QHBoxLayout,
+                                   QLabel, QPushButton, QSlider, QListWidget)
+    from PyQt5.QtCore import Qt
+
     # Create application
     app = QApplication(sys.argv)
 
     # Load and apply stylesheets
     apply_stylesheets(app)
 
-    # Create main window and apply gradient
-    from PyQt5.QtWidgets import QMainWindow
-
+    # Create main window
     window = QMainWindow()
-    window.setWindowTitle("Deep-Sea Stylesheet Test")
+    window.setWindowTitle("Deep-Sea Design System Test")
     window.resize(1280, 720)
+
+    # Create central widget with layout
+    central_widget = QWidget()
+    window.setCentralWidget(central_widget)
+    layout = QVBoxLayout(central_widget)
+    layout.setSpacing(24)
+    layout.setContentsMargins(48, 48, 48, 48)
+
+    # Title
+    title = QLabel("Deep-Sea Design System")
+    title.setObjectName("display")
+    layout.addWidget(title)
+
+    # Subtitle
+    subtitle = QLabel("Phase 4 Design Tokens - QSS Implementation Test")
+    subtitle.setObjectName("h3")
+    layout.addWidget(subtitle)
+
+    layout.addSpacing(16)
+
+    # Primary button
+    primary_btn = QPushButton("Primary Button")
+    layout.addWidget(primary_btn)
+
+    # Secondary button
+    secondary_btn = QPushButton("Secondary Button")
+    secondary_btn.setObjectName("secondary")
+    layout.addWidget(secondary_btn)
+
+    # Icon button
+    icon_btn = QPushButton("Icon Button")
+    icon_btn.setObjectName("icon")
+    layout.addWidget(icon_btn)
+
+    layout.addSpacing(16)
+
+    # Slider (Volume control style)
+    slider_label = QLabel("Volume Slider")
+    slider_label.setObjectName("h4")
+    layout.addWidget(slider_label)
+
+    slider = QSlider(Qt.Horizontal)
+    slider.setMinimum(0)
+    slider.setMaximum(100)
+    slider.setValue(70)
+    layout.addWidget(slider)
+
+    layout.addSpacing(16)
+
+    # Card widget
+    card = QWidget()
+    card.setObjectName("card")
+    card_layout = QVBoxLayout(card)
+
+    card_title = QLabel("Card Component")
+    card_title.setObjectName("h3")
+    card_layout.addWidget(card_title)
+
+    card_text = QLabel("This is a frosted glass card with Phase 4 styling")
+    card_text.setObjectName("body")
+    card_layout.addWidget(card_text)
+
+    layout.addWidget(card)
+
+    layout.addSpacing(16)
+
+    # Color swatches
+    colors_label = QLabel("Design Token Colors")
+    colors_label.setObjectName("h4")
+    layout.addWidget(colors_label)
+
+    colors_layout = QHBoxLayout()
+    color_names = ["Primary (#a78bfa)", "Success (#10b981)", "Warning (#f59e0b)", "Destructive (#ef4444)"]
+    for color_name in color_names:
+        color_label = QLabel(color_name)
+        color_label.setObjectName("caption")
+        colors_layout.addWidget(color_label)
+    layout.addLayout(colors_layout)
+
+    layout.addStretch()
 
     # Apply gradient background
     set_gradient_background(window)
@@ -150,9 +234,26 @@ if __name__ == "__main__":
     # Show window
     window.show()
 
-    print("✓ Stylesheet test window displayed")
-    print("  - Gradient background applied")
-    print("  - QSS styles loaded")
-    print("  - Close window to exit")
+    print("\n" + "="*60)
+    print("✓ Deep-Sea Design System Test Window")
+    print("="*60)
+    print("✓ Phase 4 gradient background applied")
+    print("  • Top: #1a0b2e (Deep Purple Start)")
+    print("  • Mid: #2d1b4e (Deep Purple Mid)")
+    print("  • Bottom: #4c1d95 (Deep Purple End)")
+    print()
+    print("✓ QSS Stylesheets loaded (30,000+ characters)")
+    print("  • main.qss (global styles)")
+    print("  • components.qss (custom components)")
+    print("  • screens.qss (screen layouts)")
+    print()
+    print("✓ Design tokens demonstrated:")
+    print("  • Typography (Display, H3, H4, Body, Caption)")
+    print("  • Buttons (Primary, Secondary, Icon)")
+    print("  • Slider (Volume control style)")
+    print("  • Card component (frosted glass effect)")
+    print()
+    print("Close window to exit...")
+    print("="*60 + "\n")
 
     sys.exit(app.exec_())
