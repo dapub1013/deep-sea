@@ -1,0 +1,376 @@
+/*
+ * Deep-Sea Screens Stylesheet
+ * Screen-specific layout and styling adjustments
+ * Based on Phase 4 Design System (docs/04-phase4-design-summary.md)
+ */
+
+/* ============================================================
+   WELCOME SCREEN
+   ============================================================ */
+
+QWidget#welcomeScreen {
+    background-color: transparent;
+    padding: 32px;
+}
+
+QWidget#welcomeScreen QLabel#welcomeTitle {
+    font-size: 40px;
+    font-weight: 500;
+    color: #f0f0f0;
+}
+
+QWidget#welcomeScreen QLabel#welcomeSubtitle {
+    font-size: 20px;
+    color: rgba(240, 240, 240, 0.7);
+}
+
+QWidget#welcomeScreen QPushButton {
+    min-width: 200px;
+    min-height: 56px;
+    font-size: 18px;
+}
+
+/* ============================================================
+   PLAYER SCREEN
+   ============================================================ */
+
+/* Two-column layout: metadata + track list | now playing + controls */
+QWidget#playerScreen {
+    background-color: transparent;
+    padding: 0;
+}
+
+/* Left column - show metadata and track list */
+QWidget#playerScreen QWidget#leftColumn {
+    background-color: transparent;
+    padding: 24px;
+}
+
+QWidget#playerScreen QWidget#leftColumn QLabel#showDate {
+    font-size: 28px;
+    font-weight: 500;
+    color: #f0f0f0;
+}
+
+QWidget#playerScreen QWidget#leftColumn QLabel#venueName {
+    font-size: 20px;
+    color: #f0f0f0;
+}
+
+QWidget#playerScreen QWidget#leftColumn QLabel#showInfo {
+    font-size: 16px;
+    color: rgba(240, 240, 240, 0.7);
+}
+
+/* Right column - now playing card */
+QWidget#playerScreen QWidget#rightColumn {
+    background-color: transparent;
+    padding: 24px;
+}
+
+QWidget#playerScreen QWidget#nowPlayingCard {
+    background-color: rgba(139, 92, 246, 0.15);
+    border: 1px solid rgba(167, 139, 250, 0.3);
+    border-radius: 12px;
+    padding: 32px;
+}
+
+QWidget#playerScreen QWidget#nowPlayingCard QLabel#trackTitle {
+    font-size: 32px;
+    font-weight: 500;
+    color: #f0f0f0;
+}
+
+QWidget#playerScreen QWidget#nowPlayingCard QLabel#trackInfo {
+    font-size: 16px;
+    color: rgba(240, 240, 240, 0.7);
+}
+
+/* ============================================================
+   BROWSE SCREEN
+   ============================================================ */
+
+QWidget#browseScreen {
+    background-color: transparent;
+    padding: 24px;
+}
+
+QWidget#browseScreen QLabel#screenTitle {
+    font-size: 32px;
+    font-weight: 500;
+    color: #f0f0f0;
+    padding-bottom: 16px;
+}
+
+/* Search/Filter section */
+QWidget#browseScreen QWidget#searchSection {
+    background-color: rgba(139, 92, 246, 0.1);
+    border: 1px solid rgba(167, 139, 250, 0.2);
+    border-radius: 12px;
+    padding: 24px;
+    margin-bottom: 24px;
+}
+
+/* Show grid/list */
+QWidget#browseScreen QWidget#showGrid {
+    background-color: transparent;
+}
+
+/* Random show button */
+QWidget#browseScreen QPushButton#randomShow {
+    background-color: #8b5cf6;  /* Purple-500 */
+    min-height: 56px;
+    font-size: 18px;
+}
+
+QWidget#browseScreen QPushButton#randomShow:hover {
+    background-color: #a78bfa;
+}
+
+/* ============================================================
+   COLLECTIONS SCREEN
+   ============================================================ */
+
+QWidget#collectionsScreen {
+    background-color: transparent;
+    padding: 24px;
+}
+
+QWidget#collectionsScreen QLabel#screenTitle {
+    font-size: 32px;
+    font-weight: 500;
+    color: #f0f0f0;
+    padding-bottom: 16px;
+}
+
+/* Collections list/grid */
+QWidget#collectionsScreen QWidget#collectionsContainer {
+    background-color: transparent;
+}
+
+/* Individual collection card */
+QWidget#collectionsScreen QWidget#collectionCard {
+    background-color: rgba(139, 92, 246, 0.15);
+    border: 1px solid rgba(167, 139, 250, 0.3);
+    border-radius: 12px;
+    padding: 24px;
+    min-height: 120px;
+}
+
+QWidget#collectionsScreen QWidget#collectionCard QLabel#collectionName {
+    font-size: 24px;
+    font-weight: 500;
+    color: #f0f0f0;
+}
+
+QWidget#collectionsScreen QWidget#collectionCard QLabel#collectionCount {
+    font-size: 16px;
+    color: rgba(240, 240, 240, 0.7);
+}
+
+/* New collection button */
+QWidget#collectionsScreen QPushButton#newCollection {
+    background-color: #a78bfa;
+    min-height: 56px;
+    font-size: 18px;
+}
+
+/* ============================================================
+   HISTORY SCREEN
+   ============================================================ */
+
+QWidget#historyScreen {
+    background-color: transparent;
+    padding: 24px;
+}
+
+QWidget#historyScreen QLabel#screenTitle {
+    font-size: 32px;
+    font-weight: 500;
+    color: #f0f0f0;
+    padding-bottom: 16px;
+}
+
+/* History list */
+QWidget#historyScreen QListWidget {
+    background-color: transparent;
+    border: none;
+}
+
+QWidget#historyScreen QListWidget::item {
+    background-color: rgba(139, 92, 246, 0.1);
+    border: 1px solid rgba(167, 139, 250, 0.2);
+    border-radius: 12px;
+    padding: 16px;
+    margin-bottom: 8px;
+    min-height: 80px;
+}
+
+QWidget#historyScreen QListWidget::item:hover {
+    background-color: rgba(139, 92, 246, 0.15);
+    border-color: rgba(167, 139, 250, 0.3);
+}
+
+QWidget#historyScreen QLabel#historyDate {
+    font-size: 14px;
+    color: rgba(240, 240, 240, 0.5);
+}
+
+QWidget#historyScreen QLabel#historyShow {
+    font-size: 18px;
+    font-weight: 500;
+    color: #f0f0f0;
+}
+
+QWidget#historyScreen QLabel#historyTrack {
+    font-size: 16px;
+    color: rgba(240, 240, 240, 0.7);
+}
+
+/* Clear history button */
+QWidget#historyScreen QPushButton#clearHistory {
+    background-color: transparent;
+    color: #ef4444;  /* Red */
+    border: 2px solid rgba(239, 68, 68, 0.5);
+    min-height: 44px;
+}
+
+QWidget#historyScreen QPushButton#clearHistory:hover {
+    background-color: rgba(239, 68, 68, 0.1);
+    border-color: #ef4444;
+}
+
+/* ============================================================
+   TOUR DETAIL SCREEN
+   ============================================================ */
+
+QWidget#tourDetailScreen {
+    background-color: transparent;
+    padding: 24px;
+}
+
+/* Tour header */
+QWidget#tourDetailScreen QWidget#tourHeader {
+    background-color: rgba(139, 92, 246, 0.15);
+    border: 1px solid rgba(167, 139, 250, 0.3);
+    border-radius: 12px;
+    padding: 32px;
+    margin-bottom: 24px;
+}
+
+QWidget#tourDetailScreen QWidget#tourHeader QLabel#tourName {
+    font-size: 32px;
+    font-weight: 500;
+    color: #f0f0f0;
+}
+
+QWidget#tourDetailScreen QWidget#tourHeader QLabel#tourDates {
+    font-size: 20px;
+    color: rgba(240, 240, 240, 0.7);
+}
+
+QWidget#tourDetailScreen QWidget#tourHeader QLabel#tourStats {
+    font-size: 16px;
+    color: rgba(240, 240, 240, 0.6);
+}
+
+/* Show list for tour */
+QWidget#tourDetailScreen QWidget#tourShows {
+    background-color: transparent;
+}
+
+/* Back button */
+QWidget#tourDetailScreen QPushButton#backButton {
+    background-color: transparent;
+    color: #a78bfa;
+    border: 2px solid rgba(167, 139, 250, 0.3);
+    min-height: 44px;
+}
+
+QWidget#tourDetailScreen QPushButton#backButton:hover {
+    background-color: rgba(167, 139, 250, 0.1);
+    border-color: #a78bfa;
+}
+
+/* ============================================================
+   RESPONSIVE ADJUSTMENTS
+   ============================================================ */
+
+/* Adjustments for smaller screens (Raspberry Pi 7" touchscreen: 1280x720) */
+/* These will be applied programmatically based on screen size */
+
+/* Compact spacing for smaller screens */
+QWidget[compact="true"] {
+    padding: 16px;
+}
+
+QWidget[compact="true"] QLabel#screenTitle {
+    font-size: 24px;
+}
+
+/* Hide non-essential elements on small screens */
+QWidget[compact="true"] QLabel#caption {
+    font-size: 12px;
+}
+
+/* ============================================================
+   DIALOG OVERLAYS
+   ============================================================ */
+
+/* Modal dialogs (settings, confirmations, etc.) */
+QDialog {
+    background-color: rgba(26, 11, 46, 0.95);
+    border: 1px solid rgba(167, 139, 250, 0.3);
+    border-radius: 12px;
+}
+
+QDialog QLabel#dialogTitle {
+    font-size: 24px;
+    font-weight: 500;
+    color: #f0f0f0;
+}
+
+QDialog QLabel#dialogMessage {
+    font-size: 16px;
+    color: rgba(240, 240, 240, 0.8);
+}
+
+/* ============================================================
+   ERROR/SUCCESS STATES
+   ============================================================ */
+
+/* Error message container */
+QWidget#errorMessage {
+    background-color: rgba(239, 68, 68, 0.15);
+    border: 1px solid rgba(239, 68, 68, 0.5);
+    border-radius: 8px;
+    padding: 12px 16px;
+}
+
+QWidget#errorMessage QLabel {
+    color: #fca5a5;  /* Light red */
+}
+
+/* Success message container */
+QWidget#successMessage {
+    background-color: rgba(16, 185, 129, 0.15);
+    border: 1px solid rgba(16, 185, 129, 0.5);
+    border-radius: 8px;
+    padding: 12px 16px;
+}
+
+QWidget#successMessage QLabel {
+    color: #6ee7b7;  /* Light green */
+}
+
+/* Warning message container */
+QWidget#warningMessage {
+    background-color: rgba(245, 158, 11, 0.15);
+    border: 1px solid rgba(245, 158, 11, 0.5);
+    border-radius: 8px;
+    padding: 12px 16px;
+}
+
+QWidget#warningMessage QLabel {
+    color: #fcd34d;  /* Light amber */
+}

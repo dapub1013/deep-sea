@@ -1,0 +1,475 @@
+/*
+ * Deep-Sea Components Stylesheet
+ * Component-specific styles for custom widgets
+ * Based on Phase 4 Design System (docs/04-phase4-design-summary.md)
+ */
+
+/* ============================================================
+   CARD COMPONENTS
+   ============================================================ */
+
+/* Base Card - frosted glass effect */
+QWidget#card {
+    background-color: rgba(139, 92, 246, 0.15);  /* Purple-500 at 15% opacity */
+    border: 1px solid rgba(167, 139, 250, 0.3);
+    border-radius: 12px;
+    padding: 16px;
+}
+
+QWidget#card:hover {
+    background-color: rgba(139, 92, 246, 0.2);
+    border-color: rgba(167, 139, 250, 0.4);
+}
+
+/* Show Card - for browse/collections screens */
+QWidget#showCard {
+    background-color: rgba(139, 92, 246, 0.15);
+    border: 1px solid rgba(167, 139, 250, 0.3);
+    border-radius: 12px;
+    padding: 16px;
+    min-height: 120px;
+}
+
+QWidget#showCard QLabel#showDate {
+    font-size: 20px;
+    font-weight: 500;
+    color: #f0f0f0;
+}
+
+QWidget#showCard QLabel#showVenue {
+    font-size: 16px;
+    color: #f0f0f0;
+}
+
+QWidget#showCard QLabel#showInfo {
+    font-size: 14px;
+    color: rgba(240, 240, 240, 0.7);
+}
+
+/* Tour Card - for tour browsing */
+QWidget#tourCard {
+    background-color: rgba(139, 92, 246, 0.15);
+    border: 1px solid rgba(167, 139, 250, 0.3);
+    border-radius: 12px;
+    padding: 16px;
+    min-height: 100px;
+}
+
+QWidget#tourCard QLabel#tourName {
+    font-size: 20px;
+    font-weight: 500;
+    color: #f0f0f0;
+}
+
+QWidget#tourCard QLabel#tourDates {
+    font-size: 14px;
+    color: rgba(240, 240, 240, 0.7);
+}
+
+/* ============================================================
+   NOW PLAYING BAR
+   ============================================================ */
+
+/* Persistent player bar (shown on non-player screens) */
+QWidget#nowPlayingBar {
+    background-color: rgba(26, 11, 46, 0.95);
+    border-top: 1px solid rgba(167, 139, 250, 0.3);
+    padding: 12px 16px;
+    min-height: 80px;
+}
+
+QWidget#nowPlayingBar QLabel#trackTitle {
+    font-size: 16px;
+    font-weight: 500;
+    color: #f0f0f0;
+}
+
+QWidget#nowPlayingBar QLabel#showInfo {
+    font-size: 14px;
+    color: rgba(240, 240, 240, 0.7);
+}
+
+/* ============================================================
+   PLAYER CONTROLS
+   ============================================================ */
+
+/* Player control button group */
+QWidget#playerControls {
+    background-color: transparent;
+    padding: 16px;
+}
+
+/* Individual control buttons */
+QWidget#playerControls QPushButton {
+    background-color: transparent;
+    border: none;
+    border-radius: 12px;
+    min-height: 44px;
+    min-width: 44px;
+    padding: 8px;
+}
+
+QWidget#playerControls QPushButton:hover {
+    background-color: rgba(167, 139, 250, 0.2);
+}
+
+QWidget#playerControls QPushButton:pressed {
+    background-color: rgba(167, 139, 250, 0.3);
+}
+
+/* Play/Pause button (larger, primary control) */
+QWidget#playerControls QPushButton#playPause {
+    background-color: #a78bfa;
+    min-height: 56px;
+    min-width: 56px;
+    border-radius: 28px;
+}
+
+QWidget#playerControls QPushButton#playPause:hover {
+    background-color: #c4b5fd;
+}
+
+QWidget#playerControls QPushButton#playPause:pressed {
+    background-color: #8b5cf6;
+}
+
+/* ============================================================
+   PROGRESS BAR (Custom Scrubbing)
+   ============================================================ */
+
+/* Custom progress bar with scrubbing for Player Screen */
+QWidget#progressBar {
+    background-color: transparent;
+    padding: 8px 0;
+}
+
+QWidget#progressBar QSlider::groove:horizontal {
+    background: rgba(167, 139, 250, 0.2);
+    height: 6px;
+    border-radius: 3px;
+}
+
+QWidget#progressBar QSlider::handle:horizontal {
+    background: #a78bfa;
+    width: 16px;
+    height: 16px;
+    border-radius: 8px;
+    margin: -5px 0;
+}
+
+QWidget#progressBar QSlider::handle:horizontal:hover {
+    background: #c4b5fd;
+    width: 20px;
+    height: 20px;
+    border-radius: 10px;
+    margin: -7px 0;
+}
+
+QWidget#progressBar QSlider::sub-page:horizontal {
+    background: #a78bfa;
+    border-radius: 3px;
+}
+
+QWidget#progressBar QLabel {
+    font-size: 14px;
+    color: rgba(240, 240, 240, 0.7);
+}
+
+/* ============================================================
+   VOLUME CONTROL
+   ============================================================ */
+
+QWidget#volumeControl {
+    background-color: transparent;
+    padding: 8px;
+}
+
+QWidget#volumeControl QSlider::groove:horizontal {
+    background: rgba(167, 139, 250, 0.2);
+    height: 6px;
+    border-radius: 3px;
+}
+
+QWidget#volumeControl QSlider::handle:horizontal {
+    background: #a78bfa;
+    width: 14px;
+    height: 14px;
+    border-radius: 7px;
+    margin: -4px 0;
+}
+
+QWidget#volumeControl QSlider::sub-page:horizontal {
+    background: #a78bfa;
+    border-radius: 3px;
+}
+
+/* Mute button in volume control */
+QWidget#volumeControl QPushButton#muteToggle {
+    background-color: transparent;
+    border: none;
+    min-height: 44px;
+    min-width: 44px;
+    border-radius: 8px;
+}
+
+QWidget#volumeControl QPushButton#muteToggle:hover {
+    background-color: rgba(167, 139, 250, 0.2);
+}
+
+/* ============================================================
+   TRACK LIST
+   ============================================================ */
+
+/* Scrollable track list (setlist) */
+QWidget#trackList {
+    background-color: transparent;
+    padding: 8px;
+}
+
+QWidget#trackList QListWidget {
+    background-color: transparent;
+    border: none;
+}
+
+QWidget#trackList QListWidget::item {
+    background-color: transparent;
+    border: none;
+    padding: 12px 16px;
+    border-radius: 8px;
+    min-height: 44px;
+}
+
+QWidget#trackList QListWidget::item:hover {
+    background-color: rgba(167, 139, 250, 0.15);
+}
+
+QWidget#trackList QListWidget::item:selected {
+    background-color: rgba(167, 139, 250, 0.25);
+    border-left: 3px solid #a78bfa;
+}
+
+/* Track number label */
+QWidget#trackList QLabel#trackNumber {
+    font-size: 14px;
+    color: rgba(240, 240, 240, 0.5);
+    min-width: 32px;
+}
+
+/* Track title label */
+QWidget#trackList QLabel#trackTitle {
+    font-size: 16px;
+    font-weight: 500;
+    color: #f0f0f0;
+}
+
+/* Track duration label */
+QWidget#trackList QLabel#trackDuration {
+    font-size: 14px;
+    color: rgba(240, 240, 240, 0.7);
+}
+
+/* Currently playing track indicator */
+QWidget#trackList QListWidget::item#currentTrack {
+    background-color: rgba(167, 139, 250, 0.3);
+    border-left: 3px solid #a78bfa;
+}
+
+/* ============================================================
+   TOP NAVIGATION
+   ============================================================ */
+
+QWidget#topNav {
+    background-color: rgba(26, 11, 46, 0.8);
+    border-bottom: 1px solid rgba(167, 139, 250, 0.3);
+    padding: 12px 16px;
+    min-height: 56px;
+}
+
+QWidget#topNav QLabel#screenTitle {
+    font-size: 24px;
+    font-weight: 500;
+    color: #f0f0f0;
+}
+
+QWidget#topNav QPushButton {
+    background-color: transparent;
+    border: none;
+    min-height: 44px;
+    min-width: 44px;
+    border-radius: 8px;
+}
+
+QWidget#topNav QPushButton:hover {
+    background-color: rgba(167, 139, 250, 0.2);
+}
+
+/* ============================================================
+   BOTTOM NAVIGATION
+   ============================================================ */
+
+QWidget#bottomNav {
+    background-color: rgba(26, 11, 46, 0.95);
+    border-top: 1px solid rgba(167, 139, 250, 0.3);
+    padding: 8px 16px;
+    min-height: 72px;
+}
+
+QWidget#bottomNav QPushButton {
+    background-color: transparent;
+    border: none;
+    color: rgba(240, 240, 240, 0.6);
+    padding: 8px 16px;
+    min-height: 56px;
+    min-width: 64px;
+    border-radius: 8px;
+    font-size: 14px;
+}
+
+QWidget#bottomNav QPushButton:hover {
+    background-color: rgba(167, 139, 250, 0.1);
+}
+
+QWidget#bottomNav QPushButton#active {
+    background-color: rgba(167, 139, 250, 0.2);
+    color: #a78bfa;
+    font-weight: 500;
+}
+
+/* ============================================================
+   EQUALIZER WIDGET
+   ============================================================ */
+
+/* Custom widget - styled programmatically via paintEvent() */
+/* See ui/components/equalizer.py for implementation */
+QWidget#equalizer {
+    background-color: transparent;
+}
+
+/* Compact equalizer (40x40) */
+QWidget#equalizer[size="compact"] {
+    min-width: 40px;
+    max-width: 40px;
+    min-height: 40px;
+    max-height: 40px;
+}
+
+/* Large equalizer (120x120) */
+QWidget#equalizer[size="large"] {
+    min-width: 120px;
+    max-width: 120px;
+    min-height: 120px;
+    max-height: 120px;
+}
+
+/* ============================================================
+   TOUCH DATE PICKER
+   ============================================================ */
+
+QWidget#touchDatePicker {
+    background-color: rgba(139, 92, 246, 0.15);
+    border: 1px solid rgba(167, 139, 250, 0.3);
+    border-radius: 12px;
+    padding: 16px;
+}
+
+QWidget#touchDatePicker QSpinBox {
+    background-color: rgba(26, 11, 46, 0.5);
+    border: 2px solid rgba(167, 139, 250, 0.3);
+    border-radius: 8px;
+    padding: 8px;
+    font-size: 24px;
+    font-weight: 500;
+    color: #f0f0f0;
+    min-height: 56px;
+}
+
+QWidget#touchDatePicker QSpinBox:focus {
+    border-color: #a78bfa;
+}
+
+QWidget#touchDatePicker QSpinBox::up-button,
+QWidget#touchDatePicker QSpinBox::down-button {
+    background-color: transparent;
+    border: none;
+    width: 44px;
+    height: 44px;
+}
+
+QWidget#touchDatePicker QSpinBox::up-button:hover,
+QWidget#touchDatePicker QSpinBox::down-button:hover {
+    background-color: rgba(167, 139, 250, 0.2);
+}
+
+/* ============================================================
+   IMAGE WITH FALLBACK
+   ============================================================ */
+
+/* Album art, waveforms, etc. */
+QLabel#albumArt {
+    background-color: rgba(26, 11, 46, 0.5);
+    border: 1px solid rgba(167, 139, 250, 0.2);
+    border-radius: 12px;
+}
+
+QLabel#waveform {
+    background-color: transparent;
+    border: none;
+}
+
+/* ============================================================
+   ACTION BUTTONS (Special Purpose)
+   ============================================================ */
+
+/* Jump to Highlight button */
+QPushButton#jumpToHighlight {
+    background-color: #f59e0b;  /* Amber/Warning color */
+    color: #1a0b2e;
+    border: none;
+    border-radius: 8px;
+    padding: 8px 16px;
+    font-size: 14px;
+    font-weight: 500;
+    min-height: 36px;
+}
+
+QPushButton#jumpToHighlight:hover {
+    background-color: #fbbf24;
+}
+
+/* Favorite/Heart button */
+QPushButton#favoriteToggle {
+    background-color: transparent;
+    border: 2px solid rgba(239, 68, 68, 0.5);  /* Red border */
+    color: #ef4444;
+    border-radius: 8px;
+    min-height: 44px;
+    min-width: 44px;
+}
+
+QPushButton#favoriteToggle:hover {
+    background-color: rgba(239, 68, 68, 0.1);
+    border-color: #ef4444;
+}
+
+QPushButton#favoriteToggle#active {
+    background-color: #ef4444;
+    color: #f0f0f0;
+    border-color: #ef4444;
+}
+
+/* ============================================================
+   LOADING INDICATORS
+   ============================================================ */
+
+QLabel#loadingIndicator {
+    color: rgba(240, 240, 240, 0.7);
+    font-size: 14px;
+}
+
+/* Progress spinner - use QProgressBar or custom QWidget */
+QProgressBar#spinner {
+    background-color: transparent;
+    border: none;
+    text-align: center;
+    color: #a78bfa;
+}
