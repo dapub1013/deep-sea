@@ -1,3 +1,17 @@
+# ⚠️ ARCHIVED DOCUMENT - SUPERSEDED
+
+**Status:** This document describes a miniaudio-based audio integration that was attempted in Phase 6 but not completed due to implementation complexity.
+
+**What happened:** The miniaudio approach proved too complex and blocked development progress. See lessons-learned/002-build-test-incrementally.md for details.
+
+**Current approach:** Phase 6 now uses pygame.mixer for audio playback. See docs/07-audio-engine-decision.md for the decision rationale.
+
+**Historical value:** This document is preserved as a record of what was attempted and why it was abandoned. The patterns documented here (Qt signals, state management) remain valid and may be useful if a proper AudioEngine wrapper is built in v2.
+
+**Date archived:** February 4, 2026
+
+---
+
 # Deep-Sea Audio Integration - Implementation Complete
 
 **Date:** February 3, 2026

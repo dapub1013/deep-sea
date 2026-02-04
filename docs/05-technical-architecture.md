@@ -518,6 +518,27 @@ class DeepSeaApp(QMainWindow):
 
 ---
 
+## ⚠️ SECTION 5 OUTDATED - Audio Engine
+
+**Note:** Section 5 (Audio Engine Integration) describes a miniaudio-based implementation that was attempted but not completed. 
+
+**Current implementation:** pygame.mixer (see docs/07-audio-engine-decision.md)
+
+**What's still valid:**
+- Section 4: Design translation patterns (QSS, components)
+- Section 6: Data layer architecture (API client, cache, database)
+- Section 7: Build & deployment strategy
+- Section 8: Security, error handling, logging
+
+**What's outdated:**
+- Section 5.1: HTTPStreamSource (not implemented)
+- Section 5.2: GaplessPlayer generator pattern (not implemented)
+- Section 5.3: miniaudio integration (replaced with pygame.mixer)
+
+For current audio implementation, see docs/06-phase6-task-plan.md Task 7.
+
+---
+
 ## 5. Audio Engine Integration
 
 ### 5.1 miniaudio Architecture
@@ -1921,7 +1942,7 @@ Before proceeding to Phase 6 (Development), confirm:
 - [x] **Architecture Patterns Understood:** UI layer, audio engine, data layer separation
 - [x] **Design Translation Approach Clear:** Phase 4 CSS → PyQt5 QSS mapping
 - [x] **State Management Pattern Agreed:** Qt signals/slots for event propagation
-- [x] **Audio Engine Integration Defined:** HTTPStreamSource + gapless generator
+- [x] **Audio Engine Integration Defined:** ~~HTTPStreamSource + gapless generator~~ → pygame.mixer (revised Feb 2026, see docs/07-audio-engine-decision.md)
 - [x] **Data Layer Architecture Accepted:** API client, cache manager, SQLite database
 - [x] **Build & Deployment Strategy Clear:** PyInstaller (macOS), systemd (RPi)
 - [x] **Security & Privacy Reviewed:** Local-only data, no tracking, minimal attack surface

@@ -1,4 +1,12 @@
-# Audio Engine Usage Guide
+# Audio Engine Usage Guide (SUPERSEDED)
+
+**Status:** This document describes a miniaudio-based AudioEngine that was attempted but not completed. See lessons-learned/002-build-test-incrementally.md for context.
+
+**Current approach:** Phase 6 uses pygame.mixer directly in UI code (see 06-phase6-task-plan.md Task 7).
+
+**Future:** This pattern may be revived in v2 if we build a proper AudioEngine wrapper around pygame.
+
+---
 
 Quick reference for using the Deep-Sea audio engine in your UI code.
 
