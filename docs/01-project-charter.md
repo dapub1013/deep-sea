@@ -77,7 +77,7 @@ This is a learning project focused on improving development skills with Claude C
 - Raspberry Pi 4 with IQAudio DAC
 
 **Technical Background:**
-- Python-based application (likely FastAPI + Tailwind + Webview, pending architecture decision)
+- Python-based application (PyQt5 + pygame.mixer, decided in Phase 5)
 - phish.in API for data and streaming
 - Previous similar project: Grateful Dead streaming app (Python + PyQt5)
 
@@ -88,13 +88,13 @@ This is a learning project focused on improving development skills with Claude C
 ### Phase 1: Project Charter ✓
 **Deliverable:** This document
 
-### Phase 2: Requirements Definition
+### Phase 2: Requirements Definition ✓
 **Deliverables:**
 - Feature list (must-haves vs nice-to-haves)
 - User stories/use cases
 - Functional requirements document
 
-### Phase 3: API Feasibility & Testing
+### Phase 3: API Feasibility & Testing ✓
 **Deliverables:**
 - API endpoint testing results
 - Audio streaming validation
@@ -102,7 +102,7 @@ This is a learning project focused on improving development skills with Claude C
 - Rate limit and constraint analysis
 - Proof of concept code snippets
 
-### Phase 4: UI/UX Design & Style Guide
+### Phase 4: UI/UX Design & Style Guide ✓
 **Deliverables:**
 - Wireframes/mockups for all major screens
 - Comprehensive style guide (colors, typography, spacing, components)
@@ -110,31 +110,39 @@ This is a learning project focused on improving development skills with Claude C
 - Design system documentation
 **Gate:** No coding begins until this phase is complete and approved
 
-### Phase 5: Technical Architecture Decision
+### Phase 5: Technical Architecture Decision ✓
 **Deliverables:**
-- Tech stack evaluation (PyQt5 vs FastAPI+Tailwind+Webview)
+- Tech stack evaluation (PyQt5 + pygame.mixer)
 - Architecture documentation
 - Development environment setup guide
 - Dependency list
 
 ### Phase 6: Development (Iterative) ⧗ IN PROGRESS
-**Deliverables:**
+**Status:** Restarting with incremental approach (Feb 2026)
+
+**Previous Attempt:**
+- ✗ miniaudio integration attempted but abandoned (too complex, unreliable)
+- ✓ Lessons learned documented (see lessons-learned/004-build-incrementally.md)
+- ✓ Audio engine decision revised to pygame.mixer (see docs/07-audio-engine-decision.md)
+
+**Current Status:**
+- Starting at: Task 1 (Minimal Application Window)
+- Approach: Strict incremental development (one task at a time)
+- Audio engine: pygame.mixer (simple, reliable, "good enough" gapless)
+- See docs/06-phase6-task-plan.md for complete task breakdown
+
+**Next Steps:**
+- Task 1: Create minimal PyQt5 window
+- Task 2-5: Build walking skeleton (window + nav + one screen)
+- Task 6-12: Implement playable audio (browse → select → play)
+- Task 13-18: Add core features (favorites, history, date picker)
+- Task 19+: Remaining features (collections, tours, now playing bar)
+
+**Deliverables (to be completed):**
 - Working application code
 - Progressive feature implementation
 - Code documentation
 - Pattern documentation (for framework reuse)
-
-**Completed (Feb 2026):**
-- ✓ Audio engine integration (HTTPStreamSource, GaplessPlayer, AudioEngine)
-- ✓ PhishInAPI client implementation
-- ✓ Test suite for audio functionality
-- ✓ Audio engine documentation and usage guide
-
-**Next Steps:**
-- Configure phish.in API authentication (API key required)
-- Implement Player Screen UI
-- Build Equalizer component
-- Iterate remaining screens
 
 ### Phase 7: Audio/Hardware Integration & Testing
 **Deliverables:**
@@ -160,6 +168,8 @@ This is a learning project focused on improving development skills with Claude C
 3. **Regular Check-ins:** Ongoing collaboration between developer and PM to review progress and make decisions
 4. **Document for Reusability:** Capture patterns, decisions, and framework elements that enable portability to Grateful Dead app refactor
 5. **Phase Completion:** Informal agreement that a phase is "done" before proceeding to next phase
+6. **Build Incrementally:** Never write more than 100 lines without running the app (added Feb 2026)
+7. **Test Before Commit:** App must run without errors before marking task complete (added Feb 2026)
 
 ### Decision-Making
 - Developer has final authority on all decisions
@@ -170,6 +180,7 @@ This is a learning project focused on improving development skills with Claude C
 - Simple living roadmap document tracking phase completion
 - Checklist of deliverables per phase
 - Current status indicator
+- Task-by-task tracking in Phase 6 (see docs/06-phase6-task-plan.md)
 
 ---
 
@@ -187,9 +198,9 @@ This is a learning project focused on improving development skills with Claude C
 - Limited programming experience outside web development
 
 **Dependencies:**
-- phish.in API availability and stability
+- phish.in API availability and stability (v2, no authentication required)
 - Claude Code for development assistance
-- Third-party libraries (to be determined in architecture phase)
+- Third-party libraries (PyQt5, pygame.mixer, requests, SQLite)
 
 ---
 
@@ -197,12 +208,13 @@ This is a learning project focused on improving development skills with Claude C
 
 | Risk | Impact | Mitigation |
 |------|--------|------------|
-| phish.in API limitations or changes | High | Early API testing phase to validate capabilities |
-| Audio streaming quality/format issues | High | Proof of concept testing before full development |
+| phish.in API limitations or changes | High | Early API testing phase to validate capabilities (✓ Complete) |
+| Audio streaming quality/format issues | High | Proof of concept testing before full development (✓ Complete - pygame.mixer chosen) |
 | Cross-platform compatibility problems | Medium | Test on both platforms throughout development |
 | Scope creep (feature additions) | Medium | Regular check-ins to evaluate and prioritize |
-| Tech stack choice proves limiting | High | Thorough architecture evaluation phase with prototyping |
-| Repeating UI redesign mistake | High | Complete UI/UX phase with approval gate before coding |
+| Tech stack choice proves limiting | High | Thorough architecture evaluation phase with prototyping (✓ Complete) |
+| Repeating UI redesign mistake | High | Complete UI/UX phase with approval gate before coding (✓ Complete) |
+| Building too much without testing | High | Strict incremental development with task-by-task approval (New - Feb 2026) |
 
 ---
 
@@ -216,12 +228,26 @@ This is a learning project focused on improving development skills with Claude C
 - Phase deliverables documented as completed
 - Key decisions logged for future reference
 - Patterns documented for Grateful Dead app refactor
+- Lessons learned captured in dedicated directory (lessons-learned/)
 
 **Tools:**
 - Visual Studio Code
 - Claude Code
 - GitHub (for version control and eventual open-sourcing)
 - Markdown files for documentation
+
+---
+
+## Lessons Learned (Added Feb 2026)
+
+The project maintains a lessons-learned directory documenting all major incidents and process improvements:
+
+1. **001: API Version Documentation Error** - Importance of explicit version documentation
+2. **002: Audio Engine API Integration Bugs** - Never trust documentation without testing
+3. **003: Redefine Gapless Playback** - Don't over-engineer for perfection
+4. **004: Build Incrementally** - Build-test-validate loop is critical
+
+See `docs/lessons-learned/` for complete post-mortems and action items.
 
 ---
 
@@ -238,11 +264,13 @@ This is a learning project focused on improving development skills with Claude C
 
 ## Approval
 
-**Developer Approval:** //signed human  Date: _________
+**Developer Approval:** //signed human  Date: January 30, 2026
 
 **PM Acknowledgment:** Claude (AI)  Date: January 30, 2026
 
+**Phase 6 Status Update:** Claude (AI)  Date: February 4, 2026
+
 ---
 
-**Charter Version:** 1.0  
-**Last Updated:** January 30, 2026
+**Charter Version:** 1.1 (Updated Feb 4, 2026)  
+**Last Updated:** February 4, 2026

@@ -34,6 +34,8 @@ Every task must satisfy ALL criteria:
 - [ ] Changes committed to git
 - [ ] Human approval received before next task
 
+**No exceptions.**
+
 ---
 
 ## Phase 6 Overview
@@ -586,7 +588,7 @@ import sys
 sys.path.insert(0, '.')
 
 from audio.pygame_player import PygamePlayer
-from PyQt5.QtCore import QCoreApplication
+from PyQt5.QtCore import QCoreApplication, QTimer
 import logging
 
 logging.basicConfig(level=logging.DEBUG)
@@ -648,7 +650,7 @@ python scripts/test_pygame_audio.py
 # ui/screens/browse.py
 from PyQt5.QtWidgets import (QWidget, QVBoxLayout, QListWidget, 
                               QListWidgetItem, QLabel, QPushButton)
-from PyQt5.QtCore import pyqtSignal
+from PyQt5.QtCore import pyqtSignal, Qt
 from data import PhishInAPI
 import logging
 
@@ -922,7 +924,7 @@ self.player.track_changed.connect(self.on_track_changed)
 self.player.error_occurred.connect(self.on_error)
 
 # Load tracks
-track_urls = [track['mp3'] for track in self.show_data['tracks']]
+track_urls = [track['mp3_url'] for track in self.show_data['tracks']]
 self.player.load_tracks(track_urls)
 
 # In setup_ui, connect buttons:
@@ -1018,6 +1020,7 @@ python main.py
 ```python
 # Replace track QLabel widgets with QListWidget:
 from PyQt5.QtWidgets import QListWidget, QListWidgetItem
+from PyQt5.QtGui import QColor
 
 # In setup_ui:
 self.track_list = QListWidget()
@@ -1229,7 +1232,7 @@ python main.py
 # ui/screens/collections.py
 from PyQt5.QtWidgets import (QWidget, QVBoxLayout, QListWidget, 
                               QListWidgetItem, QLabel)
-from PyQt5.QtCore import pyqtSignal
+from PyQt5.QtCore import pyqtSignal, Qt
 from data.database import Database
 from data import PhishInAPI
 
@@ -1409,7 +1412,7 @@ SELECT * FROM listening_history;
 # ui/screens/history.py
 from PyQt5.QtWidgets import (QWidget, QVBoxLayout, QListWidget, 
                               QListWidgetItem, QLabel)
-from PyQt5.QtCore import pyqtSignal
+from PyQt5.QtCore import pyqtSignal, Qt
 from data.database import Database
 from data import PhishInAPI
 
@@ -1642,4 +1645,4 @@ If at ANY point during development Claude Code:
 
 ---
 
-**End of Phase 6 Task Plan v1.0**
+**End of Phase 6 Task Plan v1.1**
