@@ -44,7 +44,7 @@ class PhishInAPI:
             response = requests.get(url, params=params, timeout=10)
             response.raise_for_status()
             data = response.json()
-            shows = data.get('data', [])
+            shows = data.get('shows', [])  # List endpoint returns 'shows' not 'data'
             logger.info(f"Fetched {len(shows)} shows")
             return shows
         except requests.exceptions.RequestException as e:
@@ -69,8 +69,7 @@ class PhishInAPI:
         try:
             response = requests.get(url, timeout=10)
             response.raise_for_status()
-            data = response.json()
-            show = data.get('data', {})
+            show = response.json()  # Response IS the show data (not wrapped)
             logger.info(f"Fetched show: {show_date}")
             return show
         except requests.exceptions.RequestException as e:
@@ -93,7 +92,7 @@ class PhishInAPI:
             response = requests.get(url, timeout=10)
             response.raise_for_status()
             data = response.json()
-            tours = data.get('data', [])
+            tours = data.get('tours', [])  # List endpoint returns 'tours' not 'data'
             logger.info(f"Fetched {len(tours)} tours")
             return tours
         except requests.exceptions.RequestException as e:
@@ -118,8 +117,7 @@ class PhishInAPI:
         try:
             response = requests.get(url, timeout=10)
             response.raise_for_status()
-            data = response.json()
-            tour = data.get('data', {})
+            tour = response.json()  # Response IS the tour data (not wrapped)
             logger.info(f"Fetched tour: {tour_slug}")
             return tour
         except requests.exceptions.RequestException as e:
@@ -146,7 +144,7 @@ class PhishInAPI:
             response = requests.get(url, params=params, timeout=10)
             response.raise_for_status()
             data = response.json()
-            songs = data.get('data', [])
+            songs = data.get('songs', [])  # List endpoint returns 'songs' not 'data'
             logger.info(f"Found {len(songs)} songs matching '{query}'")
             return songs
         except requests.exceptions.RequestException as e:

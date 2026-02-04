@@ -70,7 +70,7 @@ class AudioEngine(QObject):
         self.current_show = show_data
 
         # Extract MP3 URLs from tracks
-        track_urls = [track['mp3'] for track in show_data['tracks']]
+        track_urls = [track['mp3_url'] for track in show_data['tracks']]  # API v2 uses 'mp3_url'
 
         # Load into player
         self.player.load_show(track_urls)
