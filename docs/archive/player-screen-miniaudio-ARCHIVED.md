@@ -1,3 +1,13 @@
+# ⚠️ ARCHIVED DOCUMENT - SUPERSEDED
+
+**Status:** This document describes a Player Screen implementation based on miniaudio that was never completed. The actual Player Screen will be built incrementally using pygame.mixer following 06-phase6-task-plan.md (Tasks 8-12).
+
+**What happened:** This document was created during the miniaudio implementation attempt that failed. The Player Screen components described here (ShowMetadataWidget, TrackListWidget, etc.) were never built.
+
+**Current approach:** Phase 6 uses the incremental task plan. Player Screen will be built in Task 9 with minimal functionality, then enhanced in Tasks 10-12.
+
+**Date archived:** February 4, 2026
+
 # Player Screen Implementation
 
 **Date:** February 3, 2026
