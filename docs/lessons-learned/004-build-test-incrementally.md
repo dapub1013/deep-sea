@@ -1,4 +1,4 @@
-# Lesson 002: Build and Test Incrementally
+# Lesson 004: Build and Test Incrementally
 
 **Date:** 2026-02-03
 **Phase:** Phase 6 (Development)
