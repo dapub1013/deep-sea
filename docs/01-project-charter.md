@@ -122,7 +122,7 @@ This is a learning project focused on improving development skills with Claude C
 
 **Previous Attempt:**
 - ✗ miniaudio integration attempted but abandoned (too complex, unreliable)
-- ✓ Lessons learned documented (see lessons-learned/004-build-incrementally.md)
+- ✓ Lessons learned documented (see docs/lessons-learned/004-build-incrementally.md)
 - ✓ Audio engine decision revised to pygame.mixer (see docs/07-audio-engine-decision.md)
 
 **Current Status:**
@@ -228,7 +228,7 @@ This is a learning project focused on improving development skills with Claude C
 - Phase deliverables documented as completed
 - Key decisions logged for future reference
 - Patterns documented for Grateful Dead app refactor
-- Lessons learned captured in dedicated directory (lessons-learned/)
+- Lessons learned captured in dedicated directory (docs/lessons-learned/)
 
 **Tools:**
 - Visual Studio Code

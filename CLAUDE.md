@@ -44,7 +44,7 @@ Deep-Sea is a desktop music player for streaming Phish concerts from phish.in. T
 8. Packaging & Deployment
 
 **Phase 6 Status:**
-- Previous attempt with miniaudio failed (see lessons-learned/002-build-test-incrementally.md)
+- Previous attempt with miniaudio failed (see docs/lessons-learned/004-build-incrementally.md)
 - Audio engine decision made: pygame.mixer (see docs/07-audio-engine-decision.md)
 - Restarting with strict incremental development (one task at a time)
 - Current task: Task 1 (Minimal Application Window)
@@ -123,7 +123,7 @@ The application will integrate with phish.in's API (read-only access).
 - phish.in serves MP3 only via direct URLs (Cloudflare CDN)
 - "Gapless" means smooth transitions (~100-300ms gaps acceptable)
 - Network streaming inherently has small gaps - this is expected
-- See lessons-learned/003-redefine-gapless-playback.md
+- See docs/lessons-learned/003-gapless-redefined.md
 
 **API Data Availability:**
 - Tours are first-class entities (promoted to Must-Have feature)
@@ -286,7 +286,7 @@ See docs/07-audio-engine-decision.md for complete decision rationale.
 - Match the baseline (phish.in web player)
 - Simple and working beats perfect and broken
 
-See lessons-learned/ directory for complete post-mortems.
+See docs/lessons-learned/ directory for complete post-mortems.
 
 ## Important Files Reference
 
@@ -300,8 +300,8 @@ See lessons-learned/ directory for complete post-mortems.
 **Current Development:**
 - docs/06-phase6-task-plan.md - **ACTIVE TASK LIST** (read this first)
 - docs/07-audio-engine-decision.md - pygame.mixer decision rationale
-- lessons-learned/002-build-test-incrementally.md - Process failure analysis
-- lessons-learned/003-redefine-gapless-playback.md - Technical expectations adjustment
+- docs/lessons-learned/004-build-incrementally.md - Process failure analysis
+- docs/lessons-learned/003-gapless-redefined.md - Technical expectations adjustment
 
 **Design Reference:**
 - docs/04-ui-ux-design/ - React prototype (DO NOT MODIFY - reference only)

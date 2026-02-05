@@ -29,7 +29,7 @@ This represents a pragmatic shift from "perfect gapless" to "good enough gapless
 - "Perfect" gapless became the enemy of "working"
 
 ### The Realization
-From lessons-learned/003-redefine-gapless-playback.md:
+From docs/lessons-learned/003-gapless-redefined.md:
 > "let's define what 'gapless' means... we're working with MP3s, this is not audiophile-level stuff"
 
 **Reality check:**
@@ -342,8 +342,8 @@ def on_error(self, error):
 
 ## References
 
-- lessons-learned/002-build-test-incrementally.md - Process failure that led to this decision
-- lessons-learned/003-redefine-gapless-playback.md - Technical expectations adjustment
+- docs/lessons-learned/004-build-incrementally.md - Process failure that led to this decision
+- docs/lessons-learned/003-gapless-redefined.md - Technical expectations adjustment
 - docs/06-phase6-task-plan.md - Task 7 implements this decision
 - docs/05-technical-architecture.md - Original miniaudio architecture (now outdated)
 

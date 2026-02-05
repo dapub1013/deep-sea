@@ -81,9 +81,11 @@ Deep-Sea is a desktop music player for streaming Phish concerts from phish.in. T
 - `docs/06-design-tokens-implementation.md` - QSS design token mapping
 
 **Lessons Learned:**
-- `lessons-learned/002-build-test-incrementally.md` - Build and test incrementally (see docs/07-audio-engine-decision.md)
-- `lessons-learned/003-redefine-gapless-playback.md` - Redefine "gapless" expectations (see docs/07-audio-engine-decision.md)
-- **Full Context:** `docs/07-audio-engine-decision.md` - Complete lessons learned from miniaudio attempt
+- `docs/lessons-learned/001-api-version-error.md` - API version documentation error
+- `docs/lessons-learned/002-audio-engine-api-integration-bugs.md` - Integration bugs from untested code
+- `docs/lessons-learned/003-gapless-redefined.md` - Redefining "gapless" expectations
+- `docs/lessons-learned/004-build-incrementally.md` - Build-test-validate loop failure
+- **Full Context:** `docs/07-audio-engine-decision.md` - Audio engine decision rationale
 
 **Project Context:**
 - `CLAUDE.md` - Project guidance for Claude Code (always current)

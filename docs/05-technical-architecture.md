@@ -526,7 +526,7 @@ class DeepSeaApp(QMainWindow):
 
 **Current Decision:** pygame.mixer (see docs/07-audio-engine-decision.md)
 
-The original Phase 5 architecture specified miniaudio with a complex HTTP streaming adapter. This approach was attempted during Phase 6 but proved unreliable and overly complex. The project pivoted to pygame.mixer for simplicity and reliability. See docs/07-audio-engine-decision.md for complete rationale and lessons-learned/003-redefine-gapless-playback.md for the conceptual shift that enabled this decision.
+The original Phase 5 architecture specified miniaudio with a complex HTTP streaming adapter. This approach was attempted during Phase 6 but proved unreliable and overly complex. The project pivoted to pygame.mixer for simplicity and reliability. See docs/07-audio-engine-decision.md for complete rationale and docs/lessons-learned/003-gapless-redefined.md for the conceptual shift that enabled this decision.
 
 ---
 
