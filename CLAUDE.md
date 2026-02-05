@@ -243,33 +243,34 @@ See docs/07-audio-engine-decision.md for complete decision rationale.
 
 ## Repository Status
 
-**Code Status (as of Feb 4, 2026):** Partially complete - design system implemented, application code not started
+**Code Status (as of Feb 4, 2026):** Clean slate - design system implemented, ready for Task 1
 
 **What EXISTS and is TRUSTED:**
 - ✅ **Design Tokens:** `ui/design_tokens.py` - Complete Python module with all Phase 4 color, typography, spacing values
 - ✅ **QSS Stylesheets:** `styles/main.qss`, `styles/components.qss`, `styles/screens.qss` - Complete QSS implementation of Phase 4 design
 - ✅ **Stylesheet Loader:** `ui/stylesheet_loader.py` - Utility for loading and applying QSS
 - ✅ **API Client:** `data/api_client.py` - Verified working with phish.in API v2
-- ✅ **Database Wrapper:** `data/database.py` - SQLite wrapper for favorites, collections, history
+- ✅ **Equalizer Component:** `ui/components/equalizer.py` - Animated 5-bar equalizer widget (Phase 4 signature element)
 - ✅ **Documentation:** All Phase 1-5 planning documents complete and approved
 
-**What does NOT exist:**
-- ❌ **No Application Entry Point:** No `main.py` yet
-- ❌ **No Screens:** Empty `ui/screens/` directory
-- ❌ **No Components:** Empty `ui/components/` directory  
-- ❌ **No Audio Engine:** Empty `audio/` directory
-- ❌ **No Main Window:** No QMainWindow implementation
+**What does NOT exist (will be built in Phase 6):**
+- ❌ **No Application Entry Point:** No `main.py` yet (Task 1 will create)
+- ❌ **No Screens:** Empty `ui/screens/` directory (Tasks 5, 8, 9, 14, 16 will create screens)
+- ❌ **No Other Components:** Only Equalizer exists in `ui/components/` (other components built as needed)
+- ❌ **No Audio Engine:** Empty `audio/` directory (Task 7 will create pygame.mixer player)
+- ❌ **No Database/Cache Implementations:** `data/database.py` and `data/cache.py` are empty stubs (Tasks 13, 15 will implement)
 
-**Previous Work Status:**
-- All code from the failed miniaudio attempt has been rolled back
+**Previous Work Status (Cleanup Complete):**
+- All code from the failed miniaudio attempt has been deleted (Feb 4, 2026)
 - Design tokens and QSS files were created BEFORE the miniaudio attempt and are audio-engine-agnostic
 - These files are reusable for the pygame.mixer implementation without modification
+- Deleted files: `audio/engine.py`, `audio/gapless_player.py`, `audio/http_source.py`, `ui/main_window.py`, `ui/screens/player.py`, and all experimental test files
 
 **Starting Point for Task 1:**
 - Create `main.py` from scratch (does not exist yet)
-- Load existing QSS stylesheets via `ui/stylesheet_loader.py`
-- Apply existing design tokens from `ui/design_tokens.py`
-- Build on existing data layer (API client, database wrapper)
+- Do NOT load QSS stylesheets yet (that's Task 3)
+- Do NOT use design tokens yet (Task 2 uses them for gradient)
+- Start with the absolute minimum PyQt5 application
 
 ## Lessons Learned
 

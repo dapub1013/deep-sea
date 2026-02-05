@@ -13,7 +13,8 @@ A modern desktop music player for streaming Phish concerts from phish.in.
 4. ✓ UI/UX Design & Style Guide
 5. ✓ Technical Architecture Decision
 6. ⧗ **Development (Iterative)** - IN PROGRESS
-   - Previous miniaudio attempt rolled back (see lessons-learned/004-build-incrementally.md)
+   - Previous miniaudio attempt rolled back (see docs/07-audio-engine-decision.md)
+   - Repository cleaned up, ready for Task 1 (Feb 4, 2026)
    - Audio engine decision revised to pygame.mixer (see docs/07-audio-engine-decision.md)
    - Currently at: Task 1 (Minimal Application Window)
    - Next: Incremental screen-by-screen development with testing at each step
@@ -80,10 +81,9 @@ Deep-Sea is a desktop music player for streaming Phish concerts from phish.in. T
 - `docs/06-design-tokens-implementation.md` - QSS design token mapping
 
 **Lessons Learned:**
-- `docs/lessons-learned/001-api-version-error.md` - API version documentation error
-- `docs/lessons-learned/002-audio-engine-api-integration-bugs.md` - Integration bugs from untested code
-- `docs/lessons-learned/003-gapless-redefined.md` - Redefining "gapless" expectations
-- `docs/lessons-learned/004-build-incrementally.md` - Build-test-validate loop failure
+- `lessons-learned/002-build-test-incrementally.md` - Build and test incrementally (see docs/07-audio-engine-decision.md)
+- `lessons-learned/003-redefine-gapless-playback.md` - Redefine "gapless" expectations (see docs/07-audio-engine-decision.md)
+- **Full Context:** `docs/07-audio-engine-decision.md` - Complete lessons learned from miniaudio attempt
 
 **Project Context:**
 - `CLAUDE.md` - Project guidance for Claude Code (always current)

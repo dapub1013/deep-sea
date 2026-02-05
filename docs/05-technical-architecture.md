@@ -520,9 +520,13 @@ class DeepSeaApp(QMainWindow):
 
 ## 5. Audio Engine Integration
 
-**Decision:** pygame.mixer (see docs/07-audio-engine-decision.md)
+> ⚠️ **OUTDATED SECTION - DO NOT IMPLEMENT**
+> This section originally specified miniaudio. The audio engine decision was revised to **pygame.mixer** in February 2026.
+> **SEE:** docs/07-audio-engine-decision.md for current architecture.
 
-The original Phase 5 architecture specified miniaudio with a complex HTTP streaming adapter. This approach was attempted during Phase 6 but proved unreliable and overly complex. The project pivoted to pygame.mixer for simplicity and reliability. See docs/07-audio-engine-decision.md for complete rationale and docs/lessons-learned/003-redefine-gapless-playback.md for the conceptual shift that enabled this decision.
+**Current Decision:** pygame.mixer (see docs/07-audio-engine-decision.md)
+
+The original Phase 5 architecture specified miniaudio with a complex HTTP streaming adapter. This approach was attempted during Phase 6 but proved unreliable and overly complex. The project pivoted to pygame.mixer for simplicity and reliability. See docs/07-audio-engine-decision.md for complete rationale and lessons-learned/003-redefine-gapless-playback.md for the conceptual shift that enabled this decision.
 
 ---
 

@@ -70,12 +70,39 @@ Every task must satisfy ALL criteria:
 
 ## Milestone 1: Walking Skeleton
 
+### Pre-Task 1: Repository Cleanup Verification
+
+**Before starting Task 1, verify the repository is clean:**
+
+```bash
+# These files should NOT exist (deleted from failed miniaudio attempt):
+ls main.py 2>/dev/null && echo "ERROR: main.py exists" || echo "✓ main.py deleted"
+ls ui/main_window.py 2>/dev/null && echo "ERROR: ui/main_window.py exists" || echo "✓ ui/main_window.py deleted"
+ls audio/engine.py 2>/dev/null && echo "ERROR: audio/engine.py exists" || echo "✓ audio/engine.py deleted"
+
+# These files SHOULD exist (design system, trusted):
+ls ui/design_tokens.py && echo "✓ design_tokens.py exists" || echo "ERROR: Missing design_tokens.py"
+ls ui/stylesheet_loader.py && echo "✓ stylesheet_loader.py exists" || echo "ERROR: Missing stylesheet_loader.py"
+ls styles/main.qss && echo "✓ main.qss exists" || echo "ERROR: Missing main.qss"
+```
+
+**If any ERROR appears:** Do NOT proceed. Repository state is inconsistent. Review CLAUDE.md "Repository Status" section.
+
+**Expected state:**
+- ✅ Design system files exist (ui/design_tokens.py, ui/stylesheet_loader.py, styles/*.qss)
+- ✅ API client exists (data/api_client.py)
+- ✅ Equalizer component exists (ui/components/equalizer.py)
+- ❌ No main.py, no ui/main_window.py, no audio engine files
+- ❌ ui/screens/ directory is empty (only __init__.py)
+
+---
+
 ### Task 1: Minimal Application Window
 
 **Scope:** Create the absolute minimum PyQt5 application.
 
 **Files to Create:**
-- `main.py` (< 50 lines)
+- `main.py` (< 50 lines, starting from scratch)
 
 **What to Build:**
 ```python
@@ -169,8 +196,9 @@ python main.py
 
 **Scope:** Load ALL three QSS files and verify base styling works.
 
-**Files to Create:**
-- `ui/stylesheet_loader.py` (use existing implementation from design tokens task)
+**Files to Use (Already Exist):**
+- `ui/stylesheet_loader.py` - Already implemented, just import it
+- `styles/main.qss`, `styles/components.qss`, `styles/screens.qss` - Already implemented
 
 **Files to Modify:**
 - `main.py` (add stylesheet loading)
