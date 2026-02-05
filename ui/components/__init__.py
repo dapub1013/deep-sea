@@ -4,9 +4,9 @@ Reusable widgets implementing Phase 4 design system.
 """
 
 from .equalizer import EqualizerWidget
-from .bottom_nav import BottomNav
+from .top_nav import TopNav
 
 __all__ = [
     'EqualizerWidget',
-    'BottomNav',
+    'TopNav',
 ]

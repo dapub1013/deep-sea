@@ -7,7 +7,7 @@ class BottomNav(QWidget):
 
     def __init__(self):
         super().__init__()
-        self.setObjectName("bottom-nav")
+        self.setObjectName("bottomNav")  # Matches QSS: QWidget#bottomNav
         self.setFixedHeight(60)
 
         layout = QHBoxLayout(self)
@@ -17,6 +17,6 @@ class BottomNav(QWidget):
         tabs = ["Home", "Browse", "Collections", "History"]
         for tab in tabs:
             btn = QPushButton(tab)
-            btn.setObjectName("nav-tab")
+            # No objectName needed - inherits from QWidget#bottomNav QPushButton
             btn.clicked.connect(lambda checked, t=tab: self.tab_changed.emit(t))
             layout.addWidget(btn)

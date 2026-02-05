@@ -18,7 +18,7 @@ class WelcomeScreen(QWidget):
         subtitle.setAlignment(Qt.AlignCenter)
 
         play_btn = QPushButton("Play Random Show")
-        play_btn.setObjectName("primary")
+        # No objectName needed - default QPushButton style is primary
         play_btn.clicked.connect(self.play_random_clicked.emit)
 
         layout.addStretch()
