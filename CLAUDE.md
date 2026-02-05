@@ -207,9 +207,9 @@ See docs/07-audio-engine-decision.md for complete decision rationale.
 
 ## Current Development Task
 
-**Task:** Task 1 - Minimal Application Window
-**Goal:** Create the absolute minimum PyQt5 application
-**Files:** main.py (< 50 lines)
+**Task:** Task 1 - Minimal Application Window  
+**Goal:** Create the absolute minimum PyQt5 application  
+**Files:** main.py (< 50 lines)  
 **Scope:** Window + centered label ONLY
 
 **What to build:**
@@ -225,14 +225,51 @@ See docs/07-audio-engine-decision.md for complete decision rationale.
 - [ ] Window closes cleanly without errors
 
 **Stop Conditions:**
-- DO NOT add gradient background yet
+- DO NOT add gradient background yet (that's Task 2)
+- DO NOT load QSS stylesheets yet (that's Task 3)
 - DO NOT add navigation
 - DO NOT add any other widgets
+
+**What You CAN Use:**
+- Existing design token values from `ui/design_tokens.py` (for hardcoded colors if needed)
+- Standard PyQt5 widgets and layouts
+- Nothing else
 
 **Next Steps After Task 1:**
 - Get human approval
 - Proceed to Task 2 (Apply Gradient Background)
+- Task 3 will load the existing QSS stylesheets
 - See docs/06-phase6-task-plan.md for full task sequence
+
+## Repository Status
+
+**Code Status (as of Feb 4, 2026):** Partially complete - design system implemented, application code not started
+
+**What EXISTS and is TRUSTED:**
+- ✅ **Design Tokens:** `ui/design_tokens.py` - Complete Python module with all Phase 4 color, typography, spacing values
+- ✅ **QSS Stylesheets:** `styles/main.qss`, `styles/components.qss`, `styles/screens.qss` - Complete QSS implementation of Phase 4 design
+- ✅ **Stylesheet Loader:** `ui/stylesheet_loader.py` - Utility for loading and applying QSS
+- ✅ **API Client:** `data/api_client.py` - Verified working with phish.in API v2
+- ✅ **Database Wrapper:** `data/database.py` - SQLite wrapper for favorites, collections, history
+- ✅ **Documentation:** All Phase 1-5 planning documents complete and approved
+
+**What does NOT exist:**
+- ❌ **No Application Entry Point:** No `main.py` yet
+- ❌ **No Screens:** Empty `ui/screens/` directory
+- ❌ **No Components:** Empty `ui/components/` directory  
+- ❌ **No Audio Engine:** Empty `audio/` directory
+- ❌ **No Main Window:** No QMainWindow implementation
+
+**Previous Work Status:**
+- All code from the failed miniaudio attempt has been rolled back
+- Design tokens and QSS files were created BEFORE the miniaudio attempt and are audio-engine-agnostic
+- These files are reusable for the pygame.mixer implementation without modification
+
+**Starting Point for Task 1:**
+- Create `main.py` from scratch (does not exist yet)
+- Load existing QSS stylesheets via `ui/stylesheet_loader.py`
+- Apply existing design tokens from `ui/design_tokens.py`
+- Build on existing data layer (API client, database wrapper)
 
 ## Lessons Learned
 
@@ -273,6 +310,14 @@ See lessons-learned/ directory for complete post-mortems.
 **Archived/Superseded:**
 - docs/06-audio-integration-complete.md - OUTDATED (miniaudio attempt)
 - docs/06-design-tokens-implementation.md - Still valid (QSS implementation)
+
+**Design System (Completed):**
+- ui/design_tokens.py - Python design token values (colors, typography, spacing)
+- styles/main.qss - Global QSS styles (11,000+ characters)
+- styles/components.qss - Component-specific QSS (9,000+ characters)
+- styles/screens.qss - Screen layout QSS (10,000+ characters)
+- ui/stylesheet_loader.py - QSS loading utilities
+- docs/06-design-tokens-implementation.md - Design token documentation
 
 ## Success Criteria
 
