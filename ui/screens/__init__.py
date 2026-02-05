@@ -3,8 +3,8 @@ UI Screens
 Full-screen views implementing Phase 4 design system.
 """
 
-from .player import PlayerScreen
+from .welcome import WelcomeScreen
 
 __all__ = [
-    'PlayerScreen',
+    'WelcomeScreen',
 ]

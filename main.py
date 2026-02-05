@@ -1,10 +1,11 @@
-# main.py - Task 4: Add Bottom Navigation Bar
+# main.py - Task 5: Add Welcome Screen (Dummy)
 import sys
 from PyQt5.QtWidgets import QApplication, QMainWindow, QLabel, QVBoxLayout, QWidget
 from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QPalette, QLinearGradient, QColor, QBrush, QPainter
 from ui.stylesheet_loader import load_stylesheets
 from ui.components.bottom_nav import BottomNav
+from ui.screens.welcome import WelcomeScreen
 
 class DeepSeaApp(QMainWindow):
     def __init__(self):
@@ -18,11 +19,18 @@ class DeepSeaApp(QMainWindow):
         main_layout.setContentsMargins(0, 0, 0, 0)
         main_layout.setSpacing(0)
 
-        # Add label
-        label = QLabel("Deep-Sea v1.0")
-        label.setAlignment(Qt.AlignCenter)
-        label.setStyleSheet("color: white; font-size: 32px;")
-        main_layout.addWidget(label)
+        # Add screen container
+        self.screen_container = QWidget()
+        screen_layout = QVBoxLayout(self.screen_container)
+        screen_layout.setContentsMargins(0, 0, 0, 0)
+        self.current_screen = WelcomeScreen()
+        self.current_screen.play_random_clicked.connect(
+            lambda: print("Play Random clicked")
+        )
+        screen_layout.addWidget(self.current_screen)
+
+        # Add to main layout
+        main_layout.addWidget(self.screen_container)
 
         # Add bottom navigation
         self.bottom_nav = BottomNav()
