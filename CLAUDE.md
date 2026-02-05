@@ -58,6 +58,67 @@ Deep-Sea is a desktop music player for streaming Phish concerts from phish.in. T
 5. **Quality Over Speed:** No timeline pressure; focus on learning and building something excellent
 6. **Document for Reusability:** Capture patterns and decisions for future Grateful Dead app refactor
 7. **Developer Authority:** Developer has final say on all decisions; Claude serves as advisor
+8. **Design-First Implementation:** Phase 4 design files are the source of truth - always verify against them before implementing
+
+## Design-First Development (CRITICAL)
+
+**Lesson Learned:** In Tasks 1-5, we implemented components based on the task plan without cross-referencing the actual Phase 4 design, resulting in wrong navigation structure and wasted effort. See `docs/lessons-learned/005-design-implementation-mismatch.md` for full details.
+
+### Before Implementing ANY UI Component
+
+**MANDATORY Design Verification Steps:**
+
+1. **Read the Phase 4 Component File:**
+   - Location: `docs/04-ui-ux-design/src/app/components/[ComponentName].tsx`
+   - Note layout structure (flex-col → QVBoxLayout, flex-row → QHBoxLayout)
+   - Note all children/content elements
+   - Note icons used (plan Qt equivalents: Unicode, images, or fonts)
+   - Note interactions (map to Qt signals)
+
+2. **Check Existing QSS Styles:**
+   - Search `styles/*.qss` for the component's objectName
+   - Verify objectName casing (camelCase in QSS: `topNav`, `bottomNav`)
+   - Check what styles exist vs. what needs to be created
+
+3. **Verify Task Plan vs. Design:**
+   - If task plan conflicts with Phase 4 design: **STOP and ask user**
+   - Phase 4 design wins unless user explicitly overrides
+   - Never assume task plan is more current than design files
+
+4. **Plan Qt Implementation:**
+   - What Qt widgets are needed?
+   - What layout managers? (QVBoxLayout, QHBoxLayout, QGridLayout)
+   - What signals/slots for interactions?
+   - What objectNames for QSS styling?
+
+### Design-to-Qt Translation Guide
+
+**React → Qt Widget Mapping:**
+- `<div>` → `QWidget`
+- `<button>` → `QPushButton`
+- `<label>` or `<span>` → `QLabel`
+- `<input>` → `QLineEdit`
+- `flex-col` (column) → `QVBoxLayout`
+- `flex-row` (row) → `QHBoxLayout`
+
+**Common Patterns:**
+- Icon above text → QVBoxLayout with QLabel(icon) + QLabel(text)
+- Inline icon+text → QHBoxLayout with QLabel(icon) + QLabel(text)
+- Stacking elements → QVBoxLayout
+- Side-by-side elements → QHBoxLayout
+
+**ObjectName Rules:**
+- QSS uses camelCase: `topNav`, `bottomNav`, `nowPlayingBar`
+- Set in Qt: `widget.setObjectName("topNav")`
+- Match exactly what's in QSS files
+
+### If Phase 4 Design Doesn't Exist for Component
+
+Some components may not have Phase 4 equivalents (new features, etc). In this case:
+1. Ask user for design direction first
+2. Reference similar components from Phase 4 for style consistency
+3. Use existing design tokens and QSS patterns
+4. Get user approval on visual appearance before proceeding
 
 ## Critical Rules for Claude Code
 
@@ -83,18 +144,25 @@ If you encounter ANY of these, **STOP IMMEDIATELY** and consult with human:
 1. Read the task completely in docs/06-phase6-task-plan.md
 2. Understand the scope and stop conditions
 3. Check acceptance criteria
+4. **DESIGN VERIFICATION (for UI components):**
+   - Read corresponding Phase 4 component file in `docs/04-ui-ux-design/src/`
+   - Verify task plan matches Phase 4 design
+   - Check QSS files for existing styles
+   - If conflict: STOP and ask user
 
 **During the task:**
-1. Write code as specified
+1. Write code as specified (following Phase 4 design if UI component)
 2. Run the app frequently (every 50 lines)
 3. Stay within task scope
 4. Do NOT add features beyond the task
+5. Add design reference comments in code
 
 **After completing the task:**
 1. Run the app - must work without errors
 2. Test manually - verify acceptance criteria
-3. Commit working code
-4. Wait for human approval before next task
+3. **For UI components:** Verify visual appearance matches Phase 4 design
+4. Commit working code
+5. Wait for human approval before next task
 
 ## Phish.in API
 
