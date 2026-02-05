@@ -4,6 +4,21 @@
 
 ---
 
+> # ⚠️ IMPORTANT: AUDIO ENGINE SECTION OUTDATED
+>
+> **This document originally specified `miniaudio` as the audio engine (lines 9, 13, 28, and throughout Section 5).**
+>
+> **The audio engine decision was REVISED in February 2026 to `pygame.mixer`.**
+>
+> **📖 For the CURRENT audio engine architecture, see:**
+> - **docs/07-audio-engine-decision.md** - Complete rationale for pygame.mixer
+> - **docs/lessons-learned/003-gapless-redefined.md** - Conceptual shift that enabled this decision
+> - **docs/lessons-learned/004-build-incrementally.md** - Process failure that necessitated the change
+>
+> **All other sections (UI Framework, Data Layer, Build/Deployment) remain accurate.**
+
+---
+
 ## 1. Executive Summary
 
 This document defines the complete technical architecture for Deep-Sea v1. The architecture leverages proven technologies (PyQt5, miniaudio) with a design-first implementation approach to deliver a modern, polished desktop music streaming application.

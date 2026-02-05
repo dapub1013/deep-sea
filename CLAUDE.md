@@ -300,8 +300,12 @@ See docs/lessons-learned/ directory for complete post-mortems.
 **Current Development:**
 - docs/06-phase6-task-plan.md - **ACTIVE TASK LIST** (read this first)
 - docs/07-audio-engine-decision.md - pygame.mixer decision rationale
-- docs/lessons-learned/004-build-incrementally.md - Process failure analysis
-- docs/lessons-learned/003-gapless-redefined.md - Technical expectations adjustment
+
+**Lessons Learned (Complete Post-Mortems):**
+- docs/lessons-learned/001-api-version-error.md - API v1/v2 documentation mismatch
+- docs/lessons-learned/002-audio-engine-api-integration-bugs.md - 6 critical bugs from untested code
+- docs/lessons-learned/003-gapless-redefined.md - Redefining "gapless" expectations
+- docs/lessons-learned/004-build-incrementally.md - Build-test-validate loop failure
 
 **Design Reference:**
 - docs/04-ui-ux-design/ - React prototype (DO NOT MODIFY - reference only)

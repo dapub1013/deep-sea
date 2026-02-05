@@ -952,7 +952,7 @@ self.player.track_changed.connect(self.on_track_changed)
 self.player.error_occurred.connect(self.on_error)
 
 # Load tracks
-track_urls = [track['mp3_url'] for track in self.show_data['tracks']]
+track_urls = [track['mp3'] for track in self.show_data['tracks']]
 self.player.load_tracks(track_urls)
 
 # In setup_ui, connect buttons:
