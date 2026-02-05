@@ -30,8 +30,14 @@ class DeepSeaApp(QMainWindow):
         screen_layout = QVBoxLayout(self.screen_container)
         screen_layout.setContentsMargins(0, 0, 0, 0)
         self.current_screen = WelcomeScreen()
-        self.current_screen.play_random_clicked.connect(
-            lambda: print("Play Random clicked")
+        self.current_screen.find_show_clicked.connect(
+            lambda: print("Find a show clicked")
+        )
+        self.current_screen.random_show_clicked.connect(
+            lambda: print("Random show clicked")
+        )
+        self.current_screen.today_in_history_clicked.connect(
+            lambda: print("Today in History clicked")
         )
         screen_layout.addWidget(self.current_screen)
 
