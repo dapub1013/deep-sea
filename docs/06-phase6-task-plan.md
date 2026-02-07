@@ -38,6 +38,82 @@ Every task must satisfy ALL criteria:
 
 ---
 
+## Design Verification Protocol (MANDATORY)
+
+**Source:** Lesson Learned 005 - Design-Implementation Mismatch
+
+### Critical Rule for UI Components
+
+**BEFORE implementing ANY UI component, you MUST:**
+
+1. **Read the Phase 4 Component File:**
+   - Location: `docs/04-ui-ux-design/src/app/components/[ComponentName].tsx` OR
+   - Location: `docs/04-ui-ux-design/src/app/screens/[ScreenName].tsx`
+   - Note layout structure (flex-col → QVBoxLayout, flex-row → QHBoxLayout)
+   - Note all children/content elements
+   - Note icons used (plan Qt equivalents: Unicode, images, or fonts)
+   - Note interactions (map to Qt signals/slots)
+   - Note styling classes (map to QSS objectNames)
+
+2. **Check Existing QSS Styles:**
+   - Search `styles/*.qss` for the component's objectName
+   - Verify objectName casing (camelCase: `topNav`, `playerControls`, etc.)
+   - Check what styles exist vs. what needs to be created
+
+3. **Verify Task Plan vs. Design:**
+   - If task plan conflicts with Phase 4 design: **STOP and ask user**
+   - Phase 4 design wins unless user explicitly overrides
+   - Never assume task plan is more current than design files
+
+4. **Plan Qt Implementation:**
+   - What Qt widgets are needed?
+   - What layout managers? (QVBoxLayout, QHBoxLayout, QGridLayout)
+   - What signals/slots for interactions?
+   - What objectNames for QSS styling?
+
+### React → Qt Translation Reference
+
+**Layout Mapping:**
+- `flex flex-col` → `QVBoxLayout`
+- `flex flex-row` → `QHBoxLayout`
+- `grid grid-cols-N` → `QGridLayout` with N columns
+- `gap-N` → `layout.setSpacing(N * 4)` (Tailwind uses 4px units)
+
+**Widget Mapping:**
+- `<button>` → `QPushButton`
+- `<div>` → `QWidget`
+- `<label>`, `<span>`, `<p>` → `QLabel`
+- `<input>` → `QLineEdit`
+
+**Icon Strategy:**
+- Phase 4 uses lucide-react icons (Heart, Clock, Play, etc.)
+- Qt options: Unicode symbols (♥, 🕒, etc.), QIcon with images, or icon fonts
+- Verify icon availability before implementation
+
+**ObjectName Rules:**
+- QSS uses camelCase: `topNav`, `bottomNav`, `playerControls`
+- Set in Qt: `widget.setObjectName("topNav")`
+- Must match exactly what's in styles/*.qss files
+
+### Design Verification Checklist (Per Component)
+
+Before calling task complete:
+- [ ] Component structure matches Phase 4 React component
+- [ ] Layout matches Phase 4 (flex direction, alignment, spacing)
+- [ ] All children/elements present
+- [ ] Icons displayed correctly (even if placeholder Unicode)
+- [ ] ObjectNames match QSS selectors
+- [ ] Styling applies correctly (verify in running app)
+- [ ] User confirms visual match to Phase 4 design
+
+**If Phase 4 design doesn't exist for a component:**
+- Ask user for design direction
+- Reference similar components from Phase 4 for consistency
+- Use existing design tokens and QSS patterns
+- Get user approval before proceeding
+
+---
+
 ## Phase 6 Overview
 
 ### Revised Milestones
@@ -233,79 +309,197 @@ python main.py
 
 ---
 
-### Task 4: Add Bottom Navigation Bar
+### Task 4: Add Top Navigation Bar
 
-**Scope:** Create bottom navigation with 4 tabs (Home, Browse, Collections, History).
+**Design Reference:** docs/04-ui-ux-design/src/app/components/TopNav.tsx
+**QSS Styles:** styles/components.qss (search for `topNav`, `navButton`)
+**Visibility:** Only on Welcome screen (per Layout.tsx)
+
+**Phase 4 Analysis:**
+- React layout: `flex justify-around items-center h-[72px]` (horizontal container)
+- Children: 2 buttons (Collections with Heart icon, History with Clock icon)
+- Button structure: `flex flex-col items-center justify-center` (icon above text, vertical)
+- Icons: Heart (lucide-react) for Collections, Clock (lucide-react) for History
+- ObjectName: `topNav` (container), buttons likely styled via QSS
+- Styling: Semi-transparent background with border, backdrop blur, shadow
+- Fixed positioning: Top of screen, full width, z-index 40
+
+**Qt Implementation Mapping:**
+- Container: QWidget with objectName="topNav"
+- Layout: QHBoxLayout with center alignment (justify-around = space evenly)
+- Buttons: QPushButton with QVBoxLayout for icon+text stacking
+- Icons: Unicode symbols (♥ U+2665, 🕒 U+1F552) in QLabel
+- Signals: clicked → navigate to Collections/History screens
+
+**Scope:** Create top navigation with 2 buttons (Collections, History).
 
 **Files to Create:**
-- `ui/components/bottom_nav.py`
+- `ui/components/top_nav.py`
 
 **What to Build:**
 ```python
-# ui/components/bottom_nav.py
-from PyQt5.QtWidgets import QWidget, QHBoxLayout, QPushButton
-from PyQt5.QtCore import pyqtSignal
+# ui/components/top_nav.py
+from PyQt5.QtWidgets import QWidget, QHBoxLayout, QVBoxLayout, QPushButton, QLabel
+from PyQt5.QtCore import pyqtSignal, Qt
 
-class BottomNav(QWidget):
-    tab_changed = pyqtSignal(str)  # Emits tab name
-    
+class TopNav(QWidget):
+    """
+    Top navigation bar (Phase 4 design).
+
+    Design Reference: docs/04-ui-ux-design/src/app/components/TopNav.tsx
+    Shows: Collections (Heart) and History (Clock) buttons
+    Layout: Horizontal container, vertical icon-above-text buttons
+    Visibility: Only on Welcome screen (per Layout.tsx line 9)
+    """
+
+    navigate_to = pyqtSignal(str)  # Emits "collections" or "history"
+
     def __init__(self):
         super().__init__()
-        self.setObjectName("bottom-nav")
-        self.setFixedHeight(60)
-        
+        self.setObjectName("topNav")
+        self.setFixedHeight(72)  # h-[72px] from Phase 4
+
         layout = QHBoxLayout(self)
         layout.setContentsMargins(0, 0, 0, 0)
-        layout.setSpacing(0)
-        
-        tabs = ["Home", "Browse", "Collections", "History"]
-        for tab in tabs:
-            btn = QPushButton(tab)
-            btn.setObjectName("nav-tab")
-            btn.clicked.connect(lambda checked, t=tab: self.tab_changed.emit(t))
-            layout.addWidget(btn)
+        layout.setAlignment(Qt.AlignCenter)
+
+        # Collections button
+        collections_btn = self._create_nav_button("♥", "Collections", "collections")
+        layout.addWidget(collections_btn)
+
+        layout.addSpacing(64)  # Gap between buttons
+
+        # History button
+        history_btn = self._create_nav_button("🕒", "History", "history")
+        layout.addWidget(history_btn)
+
+    def _create_nav_button(self, icon, text, nav_target):
+        """Create vertical icon-above-text button."""
+        btn = QPushButton()
+        btn.setObjectName("navButton")
+        btn.setMinimumSize(72, 56)  # min-w-[72px] min-h-[56px]
+
+        # Create vertical layout for icon + text
+        btn_layout = QVBoxLayout(btn)
+        btn_layout.setSpacing(4)  # gap-1 = 4px
+        btn_layout.setContentsMargins(8, 8, 8, 8)
+        btn_layout.setAlignment(Qt.AlignCenter)
+
+        # Icon label
+        icon_label = QLabel(icon)
+        icon_label.setObjectName("navIcon")
+        icon_label.setAlignment(Qt.AlignCenter)
+        icon_label.setStyleSheet("font-size: 24px;")  # size={24}
+        btn_layout.addWidget(icon_label)
+
+        # Text label
+        text_label = QLabel(text)
+        text_label.setObjectName("navText")
+        text_label.setAlignment(Qt.AlignCenter)
+        text_label.setStyleSheet("font-size: 12px;")  # text-xs
+        btn_layout.addWidget(text_label)
+
+        # Connect signal
+        btn.clicked.connect(lambda: self.navigate_to.emit(nav_target))
+
+        return btn
 ```
 
 **Files to Modify:**
-- `main.py` (add bottom nav to window)
+- `main.py` (add top nav to window)
 
 ```python
 # In DeepSeaApp.__init__:
-from ui.components.bottom_nav import BottomNav
+from ui.components.top_nav import TopNav
+from PyQt5.QtWidgets import QVBoxLayout, QWidget
 
-self.bottom_nav = BottomNav()
-self.bottom_nav.tab_changed.connect(self.on_tab_changed)
+# Create central widget with layout
+central = QWidget()
+main_layout = QVBoxLayout(central)
+main_layout.setContentsMargins(0, 0, 0, 0)
+main_layout.setSpacing(0)
 
-# Add to layout (use QVBoxLayout)
-# ... (replace setCentralWidget with layout)
+# Add top nav
+self.top_nav = TopNav()
+self.top_nav.navigate_to.connect(self.on_navigate_to)
+main_layout.addWidget(self.top_nav)
 
-def on_tab_changed(self, tab_name):
-    print(f"Tab clicked: {tab_name}")  # Console output only
+# Add screen container
+self.screen_container = QWidget()
+screen_layout = QVBoxLayout(self.screen_container)
+screen_layout.setContentsMargins(0, 0, 0, 0)
+
+# Placeholder label for now
+label = QLabel("Deep-Sea v1.0")
+label.setAlignment(Qt.AlignCenter)
+label.setStyleSheet("color: white; font-size: 32px;")
+screen_layout.addWidget(label)
+
+main_layout.addWidget(self.screen_container)
+self.setCentralWidget(central)
+
+def on_navigate_to(self, destination):
+    print(f"Navigate to: {destination}")  # Console output only
 ```
 
 **Acceptance Criteria:**
-- [ ] Bottom nav appears at bottom of window
-- [ ] 4 buttons visible: Home, Browse, Collections, History
-- [ ] Clicking each button prints tab name to console
-- [ ] No screen switching yet (just console output)
+- [ ] TopNav appears at TOP of window (not bottom)
+- [ ] 2 buttons visible: Collections (♥), History (🕒)
+- [ ] Buttons have icon ABOVE text (vertical layout)
+- [ ] Clicking Collections prints "Navigate to: collections" to console
+- [ ] Clicking History prints "Navigate to: history" to console
+- [ ] ObjectName matches QSS: `topNav`
+- [ ] Visual appearance matches Phase 4 TopNav component
+- [ ] **User confirms:** Looks like Phase 4 design
 
 **Manual Test:**
 ```bash
 python main.py
-# Click each tab button
-# Verify console prints: "Tab clicked: Home", etc.
+# TopNav should appear at top of window
+# Click Collections button → console: "Navigate to: collections"
+# Click History button → console: "Navigate to: history"
+# Verify icon is ABOVE text (not inline)
+# Compare to docs/04-ui-ux-design/src/app/components/TopNav.tsx visual
 ```
 
 **Stop Conditions:**
+- DO NOT create bottom navigation (Phase 4 uses top nav only on Welcome)
+- DO NOT add Home or Browse buttons (only Collections and History)
 - DO NOT create screen classes yet
-- DO NOT implement screen switching
-- DO NOT add icons to buttons
+- DO NOT implement actual navigation (just console output)
 
 ---
 
 ### Task 5: Add Welcome Screen (Dummy)
 
-**Scope:** Create minimal Welcome screen that displays when app opens.
+**Design Reference:** docs/04-ui-ux-design/src/app/screens/WelcomeScreen.tsx
+**QSS Styles:** styles/screens.qss (search for `welcomeScreen`)
+
+**Phase 4 Analysis:**
+- React layout: `min-h-screen flex flex-col items-center justify-center p-8 pt-24 pb-24`
+- Children (in order):
+  1. Logo container: `w-32 h-32 rounded-3xl bg-gradient-to-br` with fish emoji (🐟)
+  2. Button container: `flex flex-col gap-4` with max-width
+     - "Find a show" button (primary variant)
+     - "Random show" button (secondary variant)
+     - "Today in History" button (secondary variant)
+- Spacing: Large gap between logo and buttons (mb-12 = 48px)
+- Buttons: Use PrimaryButton component with variant prop
+- Interactions:
+  - "Find a show" → navigate to /browse
+  - "Random show" → fetch random show, play, navigate to /player
+  - "Today in History" → fetch show from today's date, play, navigate to /player
+- TopNav overlay: Rendered by Layout.tsx, not WelcomeScreen itself
+
+**Qt Implementation Mapping:**
+- Container: QWidget with objectName="welcomeScreen"
+- Main layout: QVBoxLayout, centered alignment
+- Logo: QLabel with gradient background (or QWidget with paintEvent)
+- Logo emoji: QLabel with large font
+- Buttons: QPushButton with objectNames "primaryButton", "secondaryButton"
+- TopNav: Separate component, managed by main window (Task 4)
+
+**Scope:** Create Welcome screen with logo and 3 action buttons.
 
 **Files to Create:**
 - `ui/screens/welcome.py`
@@ -315,31 +509,72 @@ python main.py
 # ui/screens/welcome.py
 from PyQt5.QtWidgets import QWidget, QVBoxLayout, QLabel, QPushButton
 from PyQt5.QtCore import Qt, pyqtSignal
+from PyQt5.QtGui import QPainter, QLinearGradient, QColor, QBrush
 
 class WelcomeScreen(QWidget):
-    play_random_clicked = pyqtSignal()
-    
+    """
+    Welcome screen (Phase 4 design).
+
+    Design Reference: docs/04-ui-ux-design/src/app/screens/WelcomeScreen.tsx
+    Shows: Logo + 3 action buttons (Find a show, Random show, Today in History)
+    Layout: Centered vertical, top/bottom padding for TopNav/NowPlayingBar
+    """
+
+    find_show_clicked = pyqtSignal()
+    random_show_clicked = pyqtSignal()
+    today_in_history_clicked = pyqtSignal()
+
     def __init__(self):
         super().__init__()
+        self.setObjectName("welcomeScreen")
         layout = QVBoxLayout(self)
-        
-        title = QLabel("Welcome to Deep-Sea")
-        title.setObjectName("title")
-        title.setAlignment(Qt.AlignCenter)
-        
-        subtitle = QLabel("Stream Phish concerts from phish.in")
-        subtitle.setObjectName("caption")
-        subtitle.setAlignment(Qt.AlignCenter)
-        
-        play_btn = QPushButton("Play Random Show")
-        play_btn.setObjectName("primary")
-        play_btn.clicked.connect(self.play_random_clicked.emit)
-        
-        layout.addStretch()
-        layout.addWidget(title)
-        layout.addWidget(subtitle)
-        layout.addSpacing(32)
-        layout.addWidget(play_btn)
+        layout.setAlignment(Qt.AlignCenter)
+        layout.setContentsMargins(32, 96, 32, 96)  # p-8, pt-24, pb-24
+
+        # Logo (128x128 rounded gradient box with emoji)
+        logo = QLabel("🐟")
+        logo.setObjectName("logo")
+        logo.setFixedSize(128, 128)
+        logo.setAlignment(Qt.AlignCenter)
+        logo.setStyleSheet("""
+            font-size: 80px;
+            background: qlineargradient(x1:0, y1:0, x2:1, y2:1,
+                stop:0 #7c3aed, stop:1 #6d28d9);
+            border-radius: 24px;
+        """)
+        layout.addWidget(logo, alignment=Qt.AlignCenter)
+
+        layout.addSpacing(48)  # mb-12 = 48px
+
+        # Buttons container (max-w-md = ~448px)
+        button_container = QWidget()
+        button_container.setMaximumWidth(448)
+        button_layout = QVBoxLayout(button_container)
+        button_layout.setSpacing(16)  # gap-4 = 16px
+        button_layout.setContentsMargins(0, 0, 0, 0)
+
+        # "Find a show" button (primary)
+        find_btn = QPushButton("Find a show")
+        find_btn.setObjectName("primaryButton")
+        find_btn.setMinimumHeight(44)
+        find_btn.clicked.connect(self.find_show_clicked.emit)
+        button_layout.addWidget(find_btn)
+
+        # "Random show" button (secondary)
+        random_btn = QPushButton("Random show")
+        random_btn.setObjectName("secondaryButton")
+        random_btn.setMinimumHeight(44)
+        random_btn.clicked.connect(self.random_show_clicked.emit)
+        button_layout.addWidget(random_btn)
+
+        # "Today in History" button (secondary)
+        today_btn = QPushButton("Today in History")
+        today_btn.setObjectName("secondaryButton")
+        today_btn.setMinimumHeight(44)
+        today_btn.clicked.connect(self.today_in_history_clicked.emit)
+        button_layout.addWidget(today_btn)
+
+        layout.addWidget(button_container, alignment=Qt.AlignCenter)
         layout.addStretch()
 ```
 
@@ -347,52 +582,54 @@ class WelcomeScreen(QWidget):
 - `main.py` (add screen container and show Welcome)
 
 ```python
-# In DeepSeaApp.__init__:
+# In DeepSeaApp.__init__ (replace placeholder label):
 from ui.screens.welcome import WelcomeScreen
-from PyQt5.QtWidgets import QVBoxLayout, QWidget
 
-# Create central widget with layout
-central = QWidget()
-main_layout = QVBoxLayout(central)
-main_layout.setContentsMargins(0, 0, 0, 0)
-
-# Add screen container
-self.screen_container = QWidget()
-screen_layout = QVBoxLayout(self.screen_container)
+# Replace the placeholder label in screen_container with:
 self.current_screen = WelcomeScreen()
-self.current_screen.play_random_clicked.connect(
-    lambda: print("Play Random clicked")
+self.current_screen.find_show_clicked.connect(
+    lambda: print("Find a show clicked")
+)
+self.current_screen.random_show_clicked.connect(
+    lambda: print("Random show clicked")
+)
+self.current_screen.today_in_history_clicked.connect(
+    lambda: print("Today in History clicked")
 )
 screen_layout.addWidget(self.current_screen)
-
-# Add to main layout
-main_layout.addWidget(self.screen_container)
-main_layout.addWidget(self.bottom_nav)
-
-self.setCentralWidget(central)
 ```
 
 **Acceptance Criteria:**
 - [ ] Welcome screen displays on app launch
-- [ ] Title and subtitle visible and centered
-- [ ] "Play Random Show" button visible
-- [ ] Clicking button prints "Play Random clicked" to console
-- [ ] Bottom nav still visible below screen
+- [ ] Logo (🐟 emoji) visible at top, centered, 128x128px
+- [ ] Logo has purple gradient background, rounded corners
+- [ ] 3 buttons visible below logo:
+  - "Find a show" (primary style)
+  - "Random show" (secondary style)
+  - "Today in History" (secondary style)
+- [ ] All buttons meet 44px minimum height
+- [ ] Buttons are max-width 448px and centered
+- [ ] Clicking each button emits correct signal (console output for now)
+- [ ] TopNav visible above screen content
+- [ ] **User confirms:** Matches Phase 4 WelcomeScreen visual
 
 **Manual Test:**
 ```bash
 python main.py
-# Verify Welcome screen appears
-# Click "Play Random Show" button
-# Verify console output
+# Verify Welcome screen appears below TopNav
+# Click "Find a show" → console: "Find a show clicked"
+# Click "Random show" → console: "Random show clicked"
+# Click "Today in History" → console: "Today in History clicked"
+# Compare to docs/04-ui-ux-design/src/app/screens/WelcomeScreen.tsx visual
 ```
 
 **Stop Conditions:**
-- DO NOT implement actual random show selection
+- DO NOT implement actual show fetching
 - DO NOT add API calls
 - DO NOT create other screens yet
+- DO NOT add navigation logic yet
 
-**Milestone 1 Complete:** You now have a working PyQt5 app with gradient background, QSS loaded, bottom nav, and one screen. App runs without errors. Commit and get approval before Milestone 2.
+**Milestone 1 Complete:** You now have a working PyQt5 app with gradient background, QSS loaded, top nav, and one screen. App runs without errors. Commit and get approval before Milestone 2.
 
 ---
 
@@ -668,7 +905,31 @@ python scripts/test_pygame_audio.py
 
 ### Task 8: Create Browse Screen (Shows List)
 
-**Scope:** Display list of shows from API with basic info.
+**Design Reference:** docs/04-ui-ux-design/src/app/screens/BrowseScreen.tsx
+**QSS Styles:** styles/screens.qss (search for `browseScreen`)
+
+**Phase 4 Analysis:**
+- React layout: `min-h-screen pb-32` with sticky header
+- Header (sticky, z-20): Back button (ChevronLeft) + "Browse Shows" title
+- Content: Tabs component with 3 tabs:
+  1. "Calendar" - TouchDatePicker component
+  2. "Tours" - List of TourCard components
+  3. "Recent" - List of recent shows (ShowCard components)
+- Default tab: "Calendar" in design, but "Recent" is simplest for MVP
+- Each ShowCard: Shows date, venue, tour, rating, tags
+- Tabs: `grid w-full grid-cols-3` layout
+
+**Qt Implementation Mapping:**
+- Container: QWidget with objectName="browseScreen"
+- Header: QWidget with QHBoxLayout (back button + title), sticky top, semi-transparent
+- Back button: QPushButton with chevron (‹ U+2039 or ← U+2190)
+- Tabs: QTabWidget with 3 tabs
+- Recent tab: QListWidget with custom ShowCard items
+- Calendar tab: Custom TouchDatePicker widget (Task 17)
+- Tours tab: QListWidget with custom TourCard items
+- Header: Fixed height, backdrop blur effect
+
+**Scope:** Display list of shows from API with basic info. Start with "Recent" tab only (simplest). Add Calendar and Tours tabs in later tasks.
 
 **Files to Create:**
 - `ui/screens/browse.py`
@@ -676,44 +937,93 @@ python scripts/test_pygame_audio.py
 **What to Build:**
 ```python
 # ui/screens/browse.py
-from PyQt5.QtWidgets import (QWidget, QVBoxLayout, QListWidget, 
-                              QListWidgetItem, QLabel, QPushButton)
-from PyQt5.QtCore import pyqtSignal, Qt
+from PyQt5.QtWidgets import (QWidget, QVBoxLayout, QHBoxLayout, QLabel,
+                              QPushButton, QTabWidget, QListWidget,
+                              QListWidgetItem)
+from PyQt5.QtCore import pyqtSignal, Qt, QSize
 from data import PhishInAPI
 import logging
 
 logger = logging.getLogger(__name__)
 
 class BrowseScreen(QWidget):
+    """
+    Browse shows screen (Phase 4 design).
+
+    Design Reference: docs/04-ui-ux-design/src/app/screens/BrowseScreen.tsx
+    Shows: Tabbed interface (Calendar, Tours, Recent)
+    Initial implementation: Recent tab only
+    """
+
     show_selected = pyqtSignal(str)  # Emits show date
-    
+    navigate_back = pyqtSignal()
+
     def __init__(self):
         super().__init__()
+        self.setObjectName("browseScreen")
         self.setup_ui()
-        self.load_shows()
-    
+        self.load_recent_shows()
+
     def setup_ui(self):
         layout = QVBoxLayout(self)
-        
+        layout.setContentsMargins(0, 0, 0, 0)
+        layout.setSpacing(0)
+
+        # Sticky header (Phase 4: sticky top-0 z-20)
+        header = QWidget()
+        header.setObjectName("browseHeader")
+        header.setFixedHeight(56)
+        header_layout = QHBoxLayout(header)
+        header_layout.setContentsMargins(16, 0, 16, 0)
+
+        # Back button with chevron
+        back_btn = QPushButton("‹")  # Unicode back chevron
+        back_btn.setObjectName("backButton")
+        back_btn.setFixedSize(44, 44)
+        back_btn.clicked.connect(self.navigate_back.emit)
+        header_layout.addWidget(back_btn)
+
         # Title
         title = QLabel("Browse Shows")
         title.setObjectName("h2")
-        layout.addWidget(title)
-        
-        # Shows list
+        header_layout.addWidget(title, 1)  # Stretch
+
+        layout.addWidget(header)
+
+        # Tabs (start with Recent only)
+        tabs = QTabWidget()
+        tabs.setObjectName("browseTabs")
+
+        # Recent tab
+        recent_tab = QWidget()
+        recent_layout = QVBoxLayout(recent_tab)
+        recent_layout.setContentsMargins(24, 24, 24, 24)  # p-6 = 24px
+
+        caption = QLabel("Recently performed shows")
+        caption.setObjectName("caption")
+        caption.setStyleSheet("color: var(--muted-foreground);")
+        recent_layout.addWidget(caption)
+
+        recent_layout.addSpacing(16)  # mb-4 = 16px
+
         self.shows_list = QListWidget()
-        self.shows_list.setObjectName("shows-list")
+        self.shows_list.setObjectName("showsList")
         self.shows_list.itemClicked.connect(self.on_show_clicked)
-        layout.addWidget(self.shows_list)
-    
-    def load_shows(self):
-        """Load recent shows from API."""
+        recent_layout.addWidget(self.shows_list)
+
+        tabs.addTab(recent_tab, "Recent")
+        # TODO: Add "Calendar" tab (Task 17)
+        # TODO: Add "Tours" tab (Milestone 4)
+
+        layout.addWidget(tabs)
+
+    def load_recent_shows(self):
+        """Load recent shows from API (1997 complete shows for now)."""
         try:
-            # Get shows from 1997 (known good data)
             shows = PhishInAPI.get_shows(year=1997, audio_status='complete')
-            
-            for show in shows[:20]:  # Limit to 20 for now
-                # Format: "1997-12-31 - MSG, New York, NY"
+
+            for show in shows[:20]:
+                # Create ShowCard-like item (Phase 4: min-h-88px)
                 date = show['date']
                 venue = show.get('venue', {})
                 if isinstance(venue, dict):
@@ -722,24 +1032,25 @@ class BrowseScreen(QWidget):
                 else:
                     venue_name = str(venue)
                     venue_location = ""
-                
-                item_text = f"{date} - {venue_name}"
+
+                # Format: "1997-12-31\nMSG, New York, NY"
+                item_text = f"{date}\n{venue_name}"
                 if venue_location:
                     item_text += f", {venue_location}"
-                
+
                 item = QListWidgetItem(item_text)
-                item.setData(Qt.UserRole, date)  # Store date for selection
+                item.setData(Qt.UserRole, date)
+                item.setSizeHint(QSize(0, 88))  # min-h-88px
                 self.shows_list.addItem(item)
-            
+
             logger.info(f"Loaded {len(shows)} shows")
-            
+
         except Exception as e:
             logger.error(f"Failed to load shows: {e}")
             error_item = QListWidgetItem(f"Error loading shows: {e}")
             self.shows_list.addItem(error_item)
-    
+
     def on_show_clicked(self, item):
-        """Handle show selection."""
         show_date = item.data(Qt.UserRole)
         if show_date:
             logger.info(f"Show selected: {show_date}")
@@ -747,62 +1058,113 @@ class BrowseScreen(QWidget):
 ```
 
 **Files to Modify:**
-- `main.py` (add Browse screen to tab switching)
+- `main.py` (connect "Find a show" button to Browse screen)
 
 ```python
-# In DeepSeaApp, modify on_tab_changed:
-def on_tab_changed(self, tab_name):
+# In DeepSeaApp, update WelcomeScreen connection:
+self.current_screen.find_show_clicked.connect(self.on_find_show)
+
+# Add method:
+def on_find_show(self):
+    """Show Browse screen."""
+    from ui.screens.browse import BrowseScreen
+
     # Clear current screen
     layout = self.screen_container.layout()
     if layout.count() > 0:
         old_screen = layout.itemAt(0).widget()
         layout.removeWidget(old_screen)
         old_screen.deleteLater()
-    
-    # Add new screen
-    if tab_name == "Home":
-        screen = WelcomeScreen()
-        screen.play_random_clicked.connect(
-            lambda: print("Play Random clicked")
-        )
-    elif tab_name == "Browse":
-        from ui.screens.browse import BrowseScreen
-        screen = BrowseScreen()
-        screen.show_selected.connect(
-            lambda date: print(f"Show selected: {date}")
-        )
-    else:
-        screen = QLabel(f"{tab_name} Screen\n(Coming Soon)")
-        screen.setAlignment(Qt.AlignCenter)
-    
-    layout.addWidget(screen)
-    self.current_screen = screen
+
+    # Add Browse screen
+    browse_screen = BrowseScreen()
+    browse_screen.show_selected.connect(
+        lambda date: print(f"Show selected: {date}")
+    )
+    browse_screen.navigate_back.connect(self.on_navigate_back)
+    layout.addWidget(browse_screen)
+    self.current_screen = browse_screen
+
+def on_navigate_back(self):
+    """Return to Welcome screen."""
+    from ui.screens.welcome import WelcomeScreen
+
+    # Clear current screen
+    layout = self.screen_container.layout()
+    if layout.count() > 0:
+        old_screen = layout.itemAt(0).widget()
+        layout.removeWidget(old_screen)
+        old_screen.deleteLater()
+
+    # Show Welcome screen
+    welcome_screen = WelcomeScreen()
+    # ... reconnect signals ...
+    layout.addWidget(welcome_screen)
+    self.current_screen = welcome_screen
 ```
 
 **Acceptance Criteria:**
-- [ ] Browse tab displays list of shows
-- [ ] Each item shows: date, venue, location
-- [ ] Clicking a show prints date to console
-- [ ] No crashes when switching between Home and Browse tabs
-- [ ] API errors display in list (don't crash app)
+- [ ] Browse screen displays with sticky header at top
+- [ ] Header shows back button (‹) and "Browse Shows" title
+- [ ] Tabs widget shows "Recent" tab (Calendar and Tours tabs can be placeholders)
+- [ ] Recent tab displays list of shows (1997 shows for now)
+- [ ] Each show item is minimum 88px tall
+- [ ] Each item shows: date, venue, location (multiline)
+- [ ] Clicking show emits show_selected signal (console output)
+- [ ] Back button navigates back to Welcome screen
+- [ ] **User confirms:** Header and layout match Phase 4 BrowseScreen
 
 **Manual Test:**
 ```bash
 python main.py
-# Click Browse tab
-# Verify shows load
+# Click "Find a show" button
+# Verify Browse screen appears with header
+# Verify shows list loads
 # Click a show
 # Verify console prints: "Show selected: 1997-12-31"
+# Click back button
+# Verify returns to Welcome screen
 ```
 
 **Stop Conditions:**
 - DO NOT create Player screen yet
 - DO NOT load full show details
 - DO NOT play audio yet
+- DO NOT implement Calendar or Tours tabs yet
 
 ---
 
 ### Task 9: Create Player Screen (Dummy)
+
+**Design Reference:** docs/04-ui-ux-design/src/app/screens/PlayerScreen.tsx
+**QSS Styles:** styles/screens.qss (search for `playerScreen`)
+
+**Phase 4 Analysis:**
+- React layout: Two-column grid (`grid grid-cols-2 gap-6`), full height with bottom padding
+- Header (sticky, z-20): Home button (left) + Favorite button (right)
+- Left column (flex-col gap-6):
+  1. Show metadata card: date, venue, location, tour, rating, tags, source
+  2. Track list card: scrollable, shows set list with track numbers/titles/durations
+- Right column (flex-col gap-6):
+  1. Now Playing card (flex-1, centered content):
+     - Equalizer (large)
+     - Current track title
+     - "Jump to Highlight" button (if jamchart track)
+     - ProgressBar
+     - PlayerControls (large: rewind, previous, play/pause, next, skip)
+     - VolumeControl
+- All cards: bg-card, rounded-xl, p-6/p-8, border, shadow
+
+**Qt Implementation Mapping:**
+- Container: QWidget with objectName="playerScreen"
+- Main layout: QVBoxLayout (header + content)
+- Content layout: QHBoxLayout (two columns)
+- Header: Separate QWidget with QHBoxLayout, fixed height 56px
+- Left column: QVBoxLayout with 2 cards (QWidget containers)
+- Right column: QVBoxLayout with 1 card
+- Cards: QWidget with objectName like "metadataCard", "trackListCard", "nowPlayingCard"
+- Equalizer: Reuse existing ui/components/equalizer.py
+- Track list: QListWidget with custom items
 
 **Scope:** Create Player screen layout WITHOUT audio integration.
 
@@ -812,70 +1174,206 @@ python main.py
 **What to Build:**
 ```python
 # ui/screens/player.py
-from PyQt5.QtWidgets import (QWidget, QVBoxLayout, QHBoxLayout, 
-                              QLabel, QPushButton)
-from PyQt5.QtCore import Qt
+from PyQt5.QtWidgets import (QWidget, QVBoxLayout, QHBoxLayout, QLabel,
+                              QPushButton, QListWidget, QListWidgetItem,
+                              QScrollArea)
+from PyQt5.QtCore import Qt, QSize
+from ui.components.equalizer import Equalizer
 
 class PlayerScreen(QWidget):
+    """
+    Player screen (Phase 4 design).
+
+    Design Reference: docs/04-ui-ux-design/src/app/screens/PlayerScreen.tsx
+    Shows: Two-column layout (metadata/tracklist | now playing controls)
+    Layout: Grid with header, left column (metadata + tracks), right column (player)
+    """
+
     def __init__(self, show_data):
         super().__init__()
+        self.setObjectName("playerScreen")
         self.show_data = show_data
         self.setup_ui()
-    
+
     def setup_ui(self):
-        main_layout = QHBoxLayout(self)
-        
-        # Left column: Metadata
+        # Main vertical layout (header + content)
+        main_layout = QVBoxLayout(self)
+        main_layout.setContentsMargins(0, 0, 0, 0)
+        main_layout.setSpacing(0)
+
+        # Header (sticky)
+        header = self._create_header()
+        main_layout.addWidget(header)
+
+        # Two-column content (grid-cols-2 gap-6)
+        content_layout = QHBoxLayout()
+        content_layout.setSpacing(24)  # gap-6 = 24px
+        content_layout.setContentsMargins(24, 24, 24, 24)  # p-6 = 24px
+
+        # Left column
         left_column = QVBoxLayout()
-        
-        # Show date
+        left_column.setSpacing(24)
+
+        metadata_card = self._create_metadata_card()
+        left_column.addWidget(metadata_card)
+
+        tracklist_card = self._create_tracklist_card()
+        left_column.addWidget(tracklist_card, 1)  # Stretch
+
+        content_layout.addLayout(left_column, 1)
+
+        # Right column
+        right_column = QVBoxLayout()
+        right_column.setSpacing(24)
+
+        now_playing_card = self._create_now_playing_card()
+        right_column.addWidget(now_playing_card, 1)
+
+        content_layout.addLayout(right_column, 1)
+
+        main_layout.addLayout(content_layout)
+
+    def _create_header(self):
+        """Sticky header with Home and Favorite buttons (Phase 4: z-20, sticky top-0)."""
+        header = QWidget()
+        header.setObjectName("playerHeader")
+        header.setFixedHeight(56)
+        layout = QHBoxLayout(header)
+        layout.setContentsMargins(16, 0, 16, 0)
+
+        home_btn = QPushButton("🏠")  # Home icon
+        home_btn.setObjectName("iconButton")
+        home_btn.setFixedSize(44, 44)
+        layout.addWidget(home_btn)
+
+        layout.addStretch()
+
+        fav_btn = QPushButton("♡")  # Heart icon
+        fav_btn.setObjectName("iconButton")
+        fav_btn.setFixedSize(44, 44)
+        layout.addWidget(fav_btn)
+
+        return header
+
+    def _create_metadata_card(self):
+        """Show metadata card (Phase 4: bg-card rounded-xl p-6 border)."""
+        card = QWidget()
+        card.setObjectName("metadataCard")
+        layout = QVBoxLayout(card)
+        layout.setSpacing(8)
+        layout.setContentsMargins(24, 24, 24, 24)  # p-6 = 24px
+
+        # Date
         date_label = QLabel(self.show_data['date'])
         date_label.setObjectName("h2")
-        left_column.addWidget(date_label)
-        
+        layout.addWidget(date_label)
+
         # Venue
         venue = self.show_data.get('venue', {})
         if isinstance(venue, dict):
             venue_text = venue.get('name', 'Unknown Venue')
+            location_text = f"{venue.get('city', '')}, {venue.get('state', '')}"
         else:
             venue_text = str(venue)
+            location_text = ""
+
         venue_label = QLabel(venue_text)
-        venue_label.setObjectName("caption")
-        left_column.addWidget(venue_label)
-        
+        venue_label.setObjectName("title")
+        layout.addWidget(venue_label)
+
+        if location_text:
+            location_label = QLabel(location_text)
+            location_label.setObjectName("body")
+            location_label.setStyleSheet("color: var(--muted-foreground);")
+            layout.addWidget(location_label)
+
+        # Tour (if available)
+        tour = self.show_data.get('tour_name', '')
+        if tour:
+            tour_label = QLabel(tour)
+            tour_label.setObjectName("caption")
+            tour_label.setStyleSheet("color: var(--muted-foreground); font-style: italic;")
+            layout.addWidget(tour_label)
+
+        layout.addStretch()
+
+        return card
+
+    def _create_tracklist_card(self):
+        """Track list card (Phase 4: bg-card rounded-xl p-6 border)."""
+        card = QWidget()
+        card.setObjectName("trackListCard")
+        layout = QVBoxLayout(card)
+        layout.setContentsMargins(24, 24, 24, 24)  # p-6 = 24px
+
+        heading = QLabel("Set List")
+        heading.setObjectName("h4")
+        layout.addWidget(heading)
+
+        layout.addSpacing(16)  # mb-4 = 16px
+
         # Track list
-        tracks_label = QLabel("Tracks:")
-        tracks_label.setObjectName("h4")
-        left_column.addWidget(tracks_label)
-        
-        for track in self.show_data.get('tracks', []):
+        self.track_list = QListWidget()
+        self.track_list.setObjectName("trackList")
+
+        for i, track in enumerate(self.show_data.get('tracks', [])):
             track_title = track.get('title', 'Unknown')
-            track_label = QLabel(f"• {track_title}")
-            left_column.addWidget(track_label)
-        
-        left_column.addStretch()
-        
-        # Right column: Controls (placeholder)
-        right_column = QVBoxLayout()
-        
-        now_playing = QLabel("Now Playing")
-        now_playing.setObjectName("h3")
-        now_playing.setAlignment(Qt.AlignCenter)
-        right_column.addWidget(now_playing)
-        
+            duration = track.get('duration', 0)
+            duration_str = f"{duration // 60}:{duration % 60:02d}"
+
+            item_text = f"{i+1}. {track_title} ({duration_str})"
+            item = QListWidgetItem(item_text)
+            item.setData(Qt.UserRole, i)
+            item.setSizeHint(QSize(0, 56))  # min-h-56px
+            self.track_list.addItem(item)
+
+        layout.addWidget(self.track_list)
+
+        return card
+
+    def _create_now_playing_card(self):
+        """Now playing card with controls (Phase 4: bg-card rounded-xl p-8 border, centered)."""
+        card = QWidget()
+        card.setObjectName("nowPlayingCard")
+        layout = QVBoxLayout(card)
+        layout.setAlignment(Qt.AlignCenter)
+        layout.setSpacing(24)
+        layout.setContentsMargins(32, 32, 32, 32)  # p-8 = 32px
+
+        # Equalizer (large)
+        equalizer = Equalizer(size="large", is_playing=False)
+        layout.addWidget(equalizer, alignment=Qt.AlignCenter)
+
+        layout.addSpacing(32)  # mb-8 = 32px
+
+        # Current track title
+        track_title = QLabel("No track playing")
+        track_title.setObjectName("title")
+        track_title.setAlignment(Qt.AlignCenter)
+        track_title.setWordWrap(True)
+        layout.addWidget(track_title)
+
+        layout.addSpacing(24)  # mb-6 = 24px
+
+        # Player controls (placeholder - large size per Phase 4)
         play_btn = QPushButton("▶ Play")
-        play_btn.setObjectName("primary")
-        right_column.addWidget(play_btn)
-        
+        play_btn.setObjectName("primaryButton")
+        play_btn.setFixedSize(64, 64)
+        layout.addWidget(play_btn, alignment=Qt.AlignCenter)
+
+        prev_btn = QPushButton("⏮ Previous")
+        prev_btn.setObjectName("secondaryButton")
+        prev_btn.setMinimumHeight(44)
+        layout.addWidget(prev_btn, alignment=Qt.AlignCenter)
+
         next_btn = QPushButton("⏭ Next")
-        next_btn.setObjectName("secondary")
-        right_column.addWidget(next_btn)
-        
-        right_column.addStretch()
-        
-        # Add columns to main layout
-        main_layout.addLayout(left_column, 1)
-        main_layout.addLayout(right_column, 1)
+        next_btn.setObjectName("secondaryButton")
+        next_btn.setMinimumHeight(44)
+        layout.addWidget(next_btn, alignment=Qt.AlignCenter)
+
+        layout.addStretch()
+
+        return card
 ```
 
 **Files to Modify:**
@@ -915,23 +1413,36 @@ def on_show_selected(self, show_date):
 
 **Acceptance Criteria:**
 - [ ] Clicking show in Browse loads Player screen
-- [ ] Player displays show date and venue
-- [ ] Player displays track list
-- [ ] Play and Next buttons visible (no functionality yet)
-- [ ] No crashes when loading Player
+- [ ] Player screen displays in two-column layout
+- [ ] Header shows Home button (left) and Favorite button (right)
+- [ ] Left column shows:
+  - Metadata card with date, venue, location
+  - Track list card with scrollable set list
+- [ ] Right column shows:
+  - Now Playing card with:
+    - Equalizer (large, not animated yet)
+    - Track title placeholder
+    - Play, Previous, Next buttons (no functionality yet)
+- [ ] All cards have rounded corners and borders (QSS styling)
+- [ ] Track list items are minimum 56px tall
+- [ ] Layout is responsive (each column gets 50% width)
+- [ ] **User confirms:** Layout matches Phase 4 PlayerScreen two-column design
 
 **Manual Test:**
 ```bash
 python main.py
-# Click Browse tab
+# Click "Find a show"
 # Click a show
-# Verify Player screen appears with show info
+# Verify Player screen appears with two-column layout
+# Verify header, metadata card, track list card, now playing card all visible
+# Compare to docs/04-ui-ux-design/src/app/screens/PlayerScreen.tsx
 ```
 
 **Stop Conditions:**
 - DO NOT implement audio playback yet
-- DO NOT add Equalizer yet
 - DO NOT add progress bar yet
+- DO NOT add volume control yet
+- DO NOT make Equalizer animate yet
 
 ---
 
@@ -1113,6 +1624,16 @@ python main.py
 
 ### Task 13: Add Favorites Button to Player
 
+**Design Reference:** docs/04-ui-ux-design/src/app/screens/PlayerScreen.tsx (lines 76-79)
+**QSS Styles:** styles/components.qss (search for `iconButton`)
+
+**Phase 4 Analysis:**
+- Location: Header, right side (after Home button)
+- Icon: Heart (lucide-react), size 24
+- Button: min-w-[44px] min-h-[44px], rounded-full, hover effect
+- Interaction: Click to toggle favorite status
+- Visual feedback: Filled heart when favorited
+
 **Scope:** Add heart button to save show to favorites.
 
 **Files to Create:**
@@ -1250,7 +1771,29 @@ python main.py
 
 ### Task 14: Create Collections Screen (List Favorites)
 
-**Scope:** Display favorited shows in Collections screen.
+**Design Reference:** docs/04-ui-ux-design/src/app/screens/CollectionsScreen.tsx
+**QSS Styles:** styles/screens.qss (search for `collectionsScreen`)
+
+**Phase 4 Analysis:**
+- React layout: `min-h-screen pb-32` with sticky header
+- Header: Back button + "Collections" title + "New Collection" button (Plus icon)
+- Content: Multiple collections with show lists
+- Each collection:
+  - Heading with collection name (emoji + text)
+  - Delete button (Trash2 icon)
+  - List of ShowCard components
+  - Empty state if no shows
+- Default collections: "⭐ Favorites", "🎫 Shows I Attended"
+- Scrollable content area
+
+**Qt Implementation Mapping:**
+- Container: QWidget with objectName="collectionsScreen"
+- Header: QWidget with QHBoxLayout (back, title, new button)
+- Collections: QListWidget or QScrollArea with multiple collection widgets
+- Each collection: QWidget with heading + show list
+- ShowCards: QListWidget items
+
+**Scope:** Display favorited shows in Collections screen (simplified - just Favorites for now).
 
 **Files to Create:**
 - `ui/screens/collections.py`
@@ -1430,6 +1973,27 @@ SELECT * FROM listening_history;
 
 ### Task 16: Create History Screen
 
+**Design Reference:** docs/04-ui-ux-design/src/app/screens/HistoryScreen.tsx
+**QSS Styles:** styles/screens.qss (search for `historyScreen`)
+
+**Phase 4 Analysis:**
+- React layout: `min-h-screen pb-32` with sticky header
+- Header: Back button + "Listening History" title
+- Content: List of history entries with timestamps
+- Each entry:
+  - Timestamp label ("5 minutes ago", "Yesterday", etc.)
+  - ShowCard component
+- Empty state: "No listening history yet. Start exploring shows!"
+- Scrollable content area
+- Chronological order (most recent first)
+
+**Qt Implementation Mapping:**
+- Container: QWidget with objectName="historyScreen"
+- Header: QWidget with QHBoxLayout (back button + title)
+- History list: QListWidget or QScrollArea with timestamp + show widgets
+- Timestamp formatting: "X minutes/hours/days ago" helper function
+- Empty state: QLabel with centered text
+
 **Scope:** Display listening history in History screen.
 
 **Files to Create:**
@@ -1528,7 +2092,32 @@ python main.py
 
 ### Task 17: Add Date Picker to Browse Screen
 
-**Scope:** Add simple date selection to Browse screen.
+**Design Reference:** docs/04-ui-ux-design/src/app/components/TouchDatePicker.tsx
+**QSS Styles:** styles/components.qss (search for `datePicker`)
+
+**Phase 4 Analysis:**
+- Complex component with multiple views:
+  1. Calendar view: Grid of days, month/year navigation
+  2. Month picker view: Grid of 12 months
+  3. Year picker view: Scrollable list of available years
+- Features:
+  - Available dates highlighted (dates with shows)
+  - Selected date highlighted
+  - Tap month name → month picker
+  - Tap year → year picker
+  - Previous/next month navigation
+- Layout: Calendar grid (7 columns for days of week)
+- Touch-optimized: Large tap targets (min 44px)
+
+**Qt Implementation Mapping:**
+- Container: QWidget with objectName="datePicker"
+- Calendar grid: QGridLayout (7 columns)
+- Day cells: QPushButton (44x44 minimum)
+- Month/year pickers: Separate QWidget views (QStackedWidget for switching)
+- Navigation: QPushButton with chevron icons
+- Available dates: Check against API data, style differently
+
+**Scope:** Add simplified date selection to Browse screen. Start with year spinner only (simpler than full TouchDatePicker).
 
 **Files to Modify:**
 - `ui/screens/browse.py`
