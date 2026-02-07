@@ -34,6 +34,7 @@ class TopNav(QWidget):
     def _create_nav_button(self, icon: str, label: str) -> QPushButton:
         """Create a navigation button with icon above text (Phase 4 layout)."""
         btn = QPushButton()
+        btn.setObjectName("navButton")
         btn.setMinimumSize(72, 56)
 
         # Create vertical layout for icon + text

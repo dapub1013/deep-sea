@@ -16,6 +16,7 @@ class WelcomeScreen(QWidget):
 
     def __init__(self):
         super().__init__()
+        self.setObjectName("welcomeScreen")
         self.setup_ui()
 
     def setup_ui(self):
@@ -64,20 +65,21 @@ class WelcomeScreen(QWidget):
 
         # "Find a show" button (primary)
         find_btn = QPushButton("Find a show")
+        find_btn.setObjectName("primaryButton")
         find_btn.setMinimumHeight(44)
         find_btn.clicked.connect(self.find_show_clicked.emit)
         buttons_layout.addWidget(find_btn)
 
         # "Random show" button (secondary)
         random_btn = QPushButton("Random show")
-        random_btn.setObjectName("secondary")
+        random_btn.setObjectName("secondaryButton")
         random_btn.setMinimumHeight(44)
         random_btn.clicked.connect(self.random_show_clicked.emit)
         buttons_layout.addWidget(random_btn)
 
         # "Today in History" button (secondary)
         today_btn = QPushButton("Today in History")
-        today_btn.setObjectName("secondary")
+        today_btn.setObjectName("secondaryButton")
         today_btn.setMinimumHeight(44)
         today_btn.clicked.connect(self.today_in_history_clicked.emit)
         buttons_layout.addWidget(today_btn)
